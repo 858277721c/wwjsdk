@@ -1,4 +1,4 @@
-package com.fanwe.lib.wwjsdk.xuebao.demo;
+package com.fanwe.lib.wwjsdk.demo;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
