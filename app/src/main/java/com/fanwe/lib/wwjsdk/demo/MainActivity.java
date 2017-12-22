@@ -6,7 +6,6 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
-import com.fanwe.lib.wwjsdk.demo.xuebao.WWControlSDKProxy;
 import com.fanwe.lib.wwjsdk.sdk.callback.WWControlSDKCallback;
 import com.fanwe.lib.wwjsdk.sdk.constants.WWCatchResult;
 import com.fanwe.lib.wwjsdk.sdk.constants.WWState;
@@ -14,6 +13,7 @@ import com.fanwe.lib.wwjsdk.sdk.proxy.IWWControlSDKProxy;
 import com.fanwe.lib.wwjsdk.sdk.response.WWCatchResultData;
 import com.fanwe.lib.wwjsdk.sdk.response.WWCheckResultData;
 import com.fanwe.lib.wwjsdk.sdk.response.WWHeartBeatData;
+import com.fanwe.lib.wwjsdk.xuebao.WWControlSDKProxy;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener
 {

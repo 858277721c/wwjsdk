@@ -1,4 +1,4 @@
-package com.fanwe.lib.wwjsdk.demo.xuebao;
+package com.fanwe.lib.wwjsdk.xuebao;
 
 import com.fanwe.lib.wwjsdk.sdk.serialport.WWSerialPortDataBuilder;
 import com.fanwe.lib.wwjsdk.utils.WWJsonUtil;
