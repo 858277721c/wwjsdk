@@ -22,7 +22,7 @@ public final class WWControlSDKProxy implements IWWControlSDKProxy
      *
      * @return
      */
-    public static WWControlSDKProxy get()
+    public static IWWControlSDKProxy get()
     {
         return new WWControlSDKProxy();
     }
