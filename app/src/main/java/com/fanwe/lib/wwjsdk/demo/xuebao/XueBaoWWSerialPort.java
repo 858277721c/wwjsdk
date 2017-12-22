@@ -1,4 +1,4 @@
-package com.fanwe.lib.wwjsdk.xuebao;
+package com.fanwe.lib.wwjsdk.demo.xuebao;
 
 import android.util.Log;
 

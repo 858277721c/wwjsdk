@@ -1,10 +1,10 @@
-package com.fanwe.lib.wwjsdk.sdk.proxy;
+package com.fanwe.lib.wwjsdk.demo.xuebao;
 
 import com.fanwe.lib.wwjsdk.sdk.IWWControlSDK;
 import com.fanwe.lib.wwjsdk.sdk.callback.WWControlSDKCallback;
+import com.fanwe.lib.wwjsdk.sdk.proxy.IWWControlSDKProxy;
 import com.fanwe.lib.wwjsdk.sdk.request.WWInitParam;
 import com.fanwe.lib.wwjsdk.utils.WWJsonUtil;
-import com.fanwe.lib.wwjsdk.xuebao.XueBaoWWControlSDK;
 
 /**
  * 娃娃机控制sdk，对外控制接口
