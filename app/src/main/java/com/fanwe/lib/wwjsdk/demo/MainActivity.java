@@ -136,7 +136,6 @@ public class MainActivity extends AppCompatActivity
             {
                 int numerator = 1; // 概率分子
                 int denominator = 2; // 概率分母
-
                 mControlSDK.init(numerator, denominator);
 
                 mControlSDK.begin(); // 开始
