@@ -1,9 +1,12 @@
 package com.fanwe.lib.wwjsdk.xuebao;
 
+import android.text.TextUtils;
+
 import com.fanwe.lib.wwjsdk.sdk.IWWControlSDK;
 import com.fanwe.lib.wwjsdk.sdk.callback.WWControlSDKCallback;
 import com.fanwe.lib.wwjsdk.sdk.proxy.IWWControlSDKProxy;
 import com.fanwe.lib.wwjsdk.sdk.request.WWInitParam;
+import com.fanwe.lib.wwjsdk.utils.FProbabilityHandler;
 import com.fanwe.lib.wwjsdk.utils.WWJsonUtil;
 
 /**
@@ -12,19 +15,19 @@ import com.fanwe.lib.wwjsdk.utils.WWJsonUtil;
 public final class WWControlSDKProxy implements IWWControlSDKProxy
 {
     private IWWControlSDK mControlSDK = new XueBaoWWControlSDK();
+    private String mJsonMove;
+    private FProbabilityHandler mProbabilityHandler = new FProbabilityHandler();
 
-    private WWControlSDKProxy()
+    private String getJsonMove()
     {
-    }
+        if (TextUtils.isEmpty(mJsonMove))
+        {
+            XueBaoWWMoveParam param = new XueBaoWWMoveParam();
+            param.moveDuration = 5000;
 
-    /**
-     * 返回娃娃机控制sdk代理对象
-     *
-     * @return
-     */
-    public static IWWControlSDKProxy get()
-    {
-        return new WWControlSDKProxy();
+            mJsonMove = WWJsonUtil.objectToJson(param);
+        }
+        return mJsonMove;
     }
 
     @Override
@@ -44,6 +47,16 @@ public final class WWControlSDKProxy implements IWWControlSDKProxy
     }
 
     @Override
+    public void init(int numerator, int denominator)
+    {
+        mProbabilityHandler.setNumerator(numerator);
+        mProbabilityHandler.setDenominator(denominator);
+
+        boolean keepCatch = mProbabilityHandler.random();
+        init(keepCatch ? 1 : 0);
+    }
+
+    @Override
     public void setCallback(WWControlSDKCallback callback)
     {
         mControlSDK.setCallback(callback);
@@ -55,29 +68,33 @@ public final class WWControlSDKProxy implements IWWControlSDKProxy
         return mControlSDK.begin(null);
     }
 
+    //---------- move start ----------
+
     @Override
     public boolean moveFront()
     {
-        return mControlSDK.moveFront(null);
+        return mControlSDK.moveBack(getJsonMove());
     }
 
     @Override
     public boolean moveBack()
     {
-        return mControlSDK.moveBack(null);
+        return mControlSDK.moveFront(getJsonMove());
     }
 
     @Override
     public boolean moveLeft()
     {
-        return mControlSDK.moveLeft(null);
+        return mControlSDK.moveLeft(getJsonMove());
     }
 
     @Override
     public boolean moveRight()
     {
-        return mControlSDK.moveRight(null);
+        return mControlSDK.moveRight(getJsonMove());
     }
+
+    //---------- move end ----------
 
     @Override
     public boolean stopMove()

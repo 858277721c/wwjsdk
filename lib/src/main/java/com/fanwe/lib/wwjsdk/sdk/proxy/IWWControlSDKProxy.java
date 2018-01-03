@@ -15,6 +15,14 @@ public interface IWWControlSDKProxy
     void init(int keepCatch);
 
     /**
+     * 设置本局游戏下爪后，保持足够的爪力把娃娃抓起的概率
+     *
+     * @param numerator   分子
+     * @param denominator 分母(大于0)
+     */
+    void init(int numerator, int denominator);
+
+    /**
      * 设置回调对象
      *
      * @param callback {@link WWControlSDKCallback}
