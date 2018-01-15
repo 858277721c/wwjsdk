@@ -2,7 +2,8 @@ package com.fanwe.lib.wwjsdk.sdk;
 
 import android.content.Context;
 
-import com.fanwe.lib.wwjsdk.log.DefaultFileHandler;
+import com.fanwe.lib.log.FFileHandler;
+import com.fanwe.lib.log.FLogger;
 import com.fanwe.lib.wwjsdk.log.WWLogger;
 
 import java.io.IOException;
@@ -84,5 +85,24 @@ public class WWSDKManager
             }
         }
         return mFileHandler;
+    }
+
+    /**
+     * 默认的log文件保存处理类
+     */
+    private class DefaultFileHandler extends FFileHandler
+    {
+        public DefaultFileHandler(Context context) throws IOException
+        {
+            super("wwserver",
+                    100 * MB,
+                    context);
+        }
+
+        public void addToLogger()
+        {
+            FLogger.removeHandler(DefaultFileHandler.class, WWLogger.get());
+            WWLogger.get().addHandler(this);
+        }
     }
 }
