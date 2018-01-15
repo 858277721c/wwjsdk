@@ -59,6 +59,11 @@ public class WWSDKManager
         }
     }
 
+    public Context getContext()
+    {
+        return mContext;
+    }
+
     private DefaultFileHandler getFileHandler()
     {
         if (mFileHandler == null)
