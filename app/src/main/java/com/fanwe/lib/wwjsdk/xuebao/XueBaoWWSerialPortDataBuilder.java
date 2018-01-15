@@ -184,7 +184,7 @@ public class XueBaoWWSerialPortDataBuilder extends WWSerialPortDataBuilder
 
         if (!checkData(arrResult))
         {
-            WWLogger.get().log(Level.WARNING, "XueBaoWWSerialPortDataBuilder error:" + WWUtils.byte2HexString(arrResult, arrResult.length));
+            WWLogger.get().log(Level.SEVERE, "XueBaoWWSerialPortDataBuilder error:" + WWUtils.byte2HexString(arrResult, arrResult.length));
         }
 
         return arrResult;

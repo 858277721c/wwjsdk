@@ -43,7 +43,7 @@ public abstract class WWSerialPort
                 @Override
                 protected void onReadError(Exception e)
                 {
-                    WWLogger.get().log(Level.WARNING, "SerialPort read error:" + e, e);
+                    WWLogger.get().log(Level.SEVERE, "SerialPort read error:" + e, e);
                 }
             };
             mSerialPort.setConfig(new FISerialPort.Config());
@@ -112,7 +112,7 @@ public abstract class WWSerialPort
             return true;
         } catch (Exception e)
         {
-            WWLogger.get().log(Level.WARNING, "SerialPort open error:" + e);
+            WWLogger.get().log(Level.SEVERE, "SerialPort open error:" + e, e);
             return false;
         }
     }
@@ -140,7 +140,7 @@ public abstract class WWSerialPort
             return true;
         } catch (IOException e)
         {
-            WWLogger.get().log(Level.WARNING, " send data error: " + e + " " + suffix, e);
+            WWLogger.get().log(Level.SEVERE, " send data error: " + e + " " + suffix, e);
             return false;
         }
     }
