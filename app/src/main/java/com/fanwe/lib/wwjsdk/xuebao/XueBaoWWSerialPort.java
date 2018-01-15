@@ -214,7 +214,7 @@ public class XueBaoWWSerialPort extends WWSerialPort
             }
         } else
         {
-            Log.e(XueBaoWWSerialPort.class.getSimpleName(), "filter data error:" + WWUtils.byte2HexString(data, data.length));
+            WWLogger.get().log(Level.SEVERE, "filter data error:" + WWUtils.byte2HexString(data, data.length));
         }
     }
 

@@ -2,12 +2,15 @@ package com.fanwe.lib.wwjsdk.xuebao;
 
 import android.text.TextUtils;
 
+import com.fanwe.lib.wwjsdk.log.WWLogger;
 import com.fanwe.lib.wwjsdk.sdk.IWWControlSDK;
 import com.fanwe.lib.wwjsdk.sdk.callback.WWControlSDKCallback;
 import com.fanwe.lib.wwjsdk.sdk.proxy.IWWControlSDKProxy;
 import com.fanwe.lib.wwjsdk.sdk.request.WWInitParam;
 import com.fanwe.lib.wwjsdk.utils.FProbabilityHandler;
 import com.fanwe.lib.wwjsdk.utils.WWJsonUtil;
+
+import java.util.logging.Level;
 
 /**
  * 娃娃机控制sdk，对外控制接口
@@ -17,6 +20,11 @@ public final class WWControlSDKProxy implements IWWControlSDKProxy
     private IWWControlSDK mControlSDK = new XueBaoWWControlSDK();
     private String mJsonMove;
     private FProbabilityHandler mProbabilityHandler = new FProbabilityHandler();
+
+    public WWControlSDKProxy()
+    {
+        WWLogger.get().log(Level.INFO, getClass().getName() + " instance created");
+    }
 
     private String getJsonMove()
     {
