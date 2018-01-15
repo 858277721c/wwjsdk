@@ -23,7 +23,7 @@ public abstract class WWSerialPortDataBuilder implements IWWSerialPortDataBuilde
             WWLogger.get().log(Level.INFO, "parse jsonInit:" + jsonInit);
         } catch (Exception e)
         {
-            WWLogger.get().log(Level.INFO, "parse jsonInit error:" + e + " " + jsonInit);
+            WWLogger.get().log(Level.SEVERE, "parse jsonInit error:" + e + " " + jsonInit, e);
         }
     }
 
