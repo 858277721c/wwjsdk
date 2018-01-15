@@ -23,7 +23,7 @@ public final class WWControlSDKProxy implements IWWControlSDKProxy
 
     public WWControlSDKProxy()
     {
-        WWLogger.get().log(Level.INFO, getClass() + " instance created");
+        WWLogger.get().log(Level.INFO, getClass().getName() + " instance created");
     }
 
     private String getJsonMove()
