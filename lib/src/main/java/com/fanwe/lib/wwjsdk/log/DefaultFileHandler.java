@@ -3,6 +3,7 @@ package com.fanwe.lib.wwjsdk.log;
 import android.content.Context;
 
 import com.fanwe.lib.log.FFileHandler;
+import com.fanwe.lib.log.FLogger;
 
 import java.io.IOException;
 
@@ -20,7 +21,7 @@ public class DefaultFileHandler extends FFileHandler
 
     public void addToLogger()
     {
-        WWLogger.get().removeHandler(this);
+        FLogger.removeHandler(DefaultFileHandler.class, WWLogger.get());
         WWLogger.get().addHandler(this);
     }
 }
