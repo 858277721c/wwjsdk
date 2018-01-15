@@ -13,7 +13,7 @@ public class DefaultFileHandler extends FFileHandler
 {
     public DefaultFileHandler(Context context) throws IOException
     {
-        super(FFileHandler.getLogFilePath("wwserver", context),
+        super(getLogFilePath("wwserver", context),
                 100 * MB,
                 1,
                 true);
