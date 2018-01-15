@@ -7,6 +7,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 
+import com.fanwe.lib.wwjsdk.sdk.WWSDKManager;
 import com.fanwe.lib.wwjsdk.sdk.callback.WWControlSDKCallback;
 import com.fanwe.lib.wwjsdk.sdk.constants.WWCatchResult;
 import com.fanwe.lib.wwjsdk.sdk.constants.WWState;
@@ -22,7 +23,7 @@ public class MainActivity extends AppCompatActivity
 
     private Button btn_check, btn_begin, btn_front, btn_back, btn_left, btn_right, btn_catch;
 
-    private IWWControlSDKProxy mControlSDK = new WWControlSDKProxy(); // 创建sdk对象
+    private IWWControlSDKProxy mControlSDK;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -46,6 +47,9 @@ public class MainActivity extends AppCompatActivity
         btn_catch.setOnClickListener(mOnClickListener);
         btn_check.setOnClickListener(mOnClickListener);
 
+        WWSDKManager.getInstance().init(this); // 初始化娃娃sdk
+
+        mControlSDK = new WWControlSDKProxy(); // 创建sdk对象（必须在娃娃sdk初始化之后创建）
         mControlSDK.setCallback(mCallback); // 设置回调监听
     }
 

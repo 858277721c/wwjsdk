@@ -59,9 +59,15 @@ public class WWSDKManager
         }
     }
 
-    public Context getContext()
+    /**
+     * 检查sdk是否初始化，如果未初始化会抛异常
+     */
+    public void checkInit()
     {
-        return mContext;
+        if (mContext == null)
+        {
+            throw new RuntimeException("you must invoke WWSDKManager.getInstance().init(context) before this");
+        }
     }
 
     private DefaultFileHandler getFileHandler()
