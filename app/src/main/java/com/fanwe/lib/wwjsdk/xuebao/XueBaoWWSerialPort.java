@@ -113,108 +113,108 @@ public class XueBaoWWSerialPort extends WWSerialPort
     private void onReadWWData(List<Byte> listData)
     {
         final byte[] data = WWUtils.listToArray(listData);
-        Log.e(XueBaoWWSerialPort.class.getSimpleName(), "onDataReceived:" + WWUtils.byte2HexString(data, data.length));
-        filterData(data);
+
+        Log.i(XueBaoWWSerialPort.class.getSimpleName(), "onReadWWData:" + WWUtils.byte2HexString(data, data.length));
+
+        if (XueBaoWWSerialPortDataBuilder.checkData(data))
+        {
+            dispatchData(data);
+        } else
+        {
+            WWLogger.get().log(Level.SEVERE, "onReadWWData error:" + WWUtils.byte2HexString(data, data.length));
+        }
     }
 
     /**
-     * 过滤数据
+     * 分发数据
      *
      * @param data
      */
-    private void filterData(byte[] data)
+    private void dispatchData(byte[] data)
     {
-        if (XueBaoWWSerialPortDataBuilder.checkData(data))
+        final int type = data[7];
+        switch (type)
         {
-            Log.i(XueBaoWWSerialPort.class.getSimpleName(), "filter data success:" + WWUtils.byte2HexString(data, data.length));
+            case DATA_CATCH_RESULT:
+                WWCatchResultData catchResultData = new WWCatchResultData();
+                catchResultData.dataOriginal = data;
 
-            final int type = data[7];
-            switch (type)
-            {
-                case DATA_CATCH_RESULT:
-                    WWCatchResultData catchResultData = new WWCatchResultData();
-                    catchResultData.dataOriginal = data;
+                final int result = data[8];
+                if (result == 1)
+                {
+                    catchResultData.result = WWCatchResult.SUCCESS;
+                } else
+                {
+                    catchResultData.result = WWCatchResult.FAIL;
+                }
 
-                    final int result = data[8];
-                    if (result == 1)
-                    {
-                        catchResultData.result = WWCatchResult.SUCCESS;
-                    } else
-                    {
-                        catchResultData.result = WWCatchResult.FAIL;
-                    }
+                WWLogger.get().log(Level.WARNING, "receive data (catch result): " + catchResultData.result);
+                getCallback().onDataCatchResult(catchResultData);
+                break;
+            case DATA_CHECK_RESULT:
+                WWCheckResultData checkResultData = new WWCheckResultData();
+                checkResultData.dataOriginal = data;
 
-                    WWLogger.get().log(Level.WARNING, "receive data (catch result): " + catchResultData.result);
-                    getCallback().onDataCatchResult(catchResultData);
-                    break;
-                case DATA_CHECK_RESULT:
-                    WWCheckResultData checkResultData = new WWCheckResultData();
-                    checkResultData.dataOriginal = data;
+                final int state = data[8];
+                switch (state)
+                {
+                    case 0:
+                        checkResultData.state = WWState.IDLE;
+                        checkResultData.stateDesc = "idle";
+                        break;
+                    case 1:
+                    case 2:
+                        checkResultData.state = WWState.OPERATING;
+                        checkResultData.stateDesc = "operating";
+                        break;
+                    case 101:
+                        checkResultData.state = WWState.ERROR;
+                        checkResultData.stateDesc = "上下电机故障或者天车未接或者上升微动故障";
+                        break;
+                    case 103:
+                        checkResultData.state = WWState.ERROR;
+                        checkResultData.stateDesc = "左右移动电机故障";
+                        break;
+                    case 104:
+                        checkResultData.state = WWState.ERROR;
+                        checkResultData.stateDesc = "前后移动电机故障或者后移微动故障";
+                        break;
+                    case 105:
+                        checkResultData.state = WWState.ERROR;
+                        checkResultData.stateDesc = "下降微动损坏或者上下电机故障";
+                        break;
+                    case 106:
+                        checkResultData.state = WWState.ERROR;
+                        checkResultData.stateDesc = "上升微动故障";
+                        break;
+                    case 108:
+                        checkResultData.state = WWState.ERROR;
+                        checkResultData.stateDesc = "前后移动电机故障或者前移";
+                        break;
+                    case 109:
+                        checkResultData.state = WWState.ERROR;
+                        checkResultData.stateDesc = "检测礼品的光眼堵住了";
+                        break;
+                    default:
+                        checkResultData.state = WWState.ERROR;
+                        checkResultData.stateDesc = "unknow error";
+                        break;
+                }
 
-                    final int state = data[8];
-                    switch (state)
-                    {
-                        case 0:
-                            checkResultData.state = WWState.IDLE;
-                            checkResultData.stateDesc = "idle";
-                            break;
-                        case 1:
-                        case 2:
-                            checkResultData.state = WWState.OPERATING;
-                            checkResultData.stateDesc = "operating";
-                            break;
-                        case 101:
-                            checkResultData.state = WWState.ERROR;
-                            checkResultData.stateDesc = "上下电机故障或者天车未接或者上升微动故障";
-                            break;
-                        case 103:
-                            checkResultData.state = WWState.ERROR;
-                            checkResultData.stateDesc = "左右移动电机故障";
-                            break;
-                        case 104:
-                            checkResultData.state = WWState.ERROR;
-                            checkResultData.stateDesc = "前后移动电机故障或者后移微动故障";
-                            break;
-                        case 105:
-                            checkResultData.state = WWState.ERROR;
-                            checkResultData.stateDesc = "下降微动损坏或者上下电机故障";
-                            break;
-                        case 106:
-                            checkResultData.state = WWState.ERROR;
-                            checkResultData.stateDesc = "上升微动故障";
-                            break;
-                        case 108:
-                            checkResultData.state = WWState.ERROR;
-                            checkResultData.stateDesc = "前后移动电机故障或者前移";
-                            break;
-                        case 109:
-                            checkResultData.state = WWState.ERROR;
-                            checkResultData.stateDesc = "检测礼品的光眼堵住了";
-                            break;
-                        default:
-                            checkResultData.state = WWState.ERROR;
-                            checkResultData.stateDesc = "unknow error";
-                            break;
-                    }
+                WWLogger.get().log(Level.INFO, "receive data (check result): " + checkResultData.state + " " + checkResultData.stateDesc);
+                getCallback().onDataCheckResult(checkResultData);
+                break;
+            case DATA_HEART_BEAT:
+                WWHeartBeatData heartBeatData = new WWHeartBeatData();
+                heartBeatData.dataOriginal = data;
 
-                    WWLogger.get().log(Level.INFO, "receive data (check result): " + checkResultData.state + " " + checkResultData.stateDesc);
-                    getCallback().onDataCheckResult(checkResultData);
-                    break;
-                case DATA_HEART_BEAT:
-                    WWHeartBeatData heartBeatData = new WWHeartBeatData();
-                    heartBeatData.dataOriginal = data;
+                heartBeatData.mac = getMacAddress();
 
-                    heartBeatData.mac = getMacAddress();
-
-                    WWLogger.get().log(Level.INFO, "receive data (heart beat): " + heartBeatData.mac);
-                    getCallback().onDataHeartBeat(heartBeatData);
-                    break;
-                default:
-                    break;
-            }
-        } else
-        {
-            WWLogger.get().log(Level.SEVERE, "filter data error:" + WWUtils.byte2HexString(data, data.length));
+                WWLogger.get().log(Level.INFO, "receive data (heart beat): " + heartBeatData.mac);
+                getCallback().onDataHeartBeat(heartBeatData);
+                break;
+            default:
+                break;
         }
     }
 
