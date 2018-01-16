@@ -185,22 +185,23 @@ public class WWSocket implements WWControlSDKCallback
 
     private void sendData(String event, Object data)
     {
-        if (!isConnected())
-        {
-            return;
-        }
-
-        String resultData = null;
+        String dataString = null;
         if (data instanceof String)
         {
-            resultData = (String) data;
+            dataString = (String) data;
         } else
         {
-            resultData = WWJsonUtil.objectToJson(data);
+            dataString = WWJsonUtil.objectToJson(data);
         }
 
-        Log.i(WWSocket.class.getSimpleName(), "sendData (" + event + ") " + resultData);
-        mSocket.emit(event, resultData);
+        if (isConnected())
+        {
+            Log.i(WWSocket.class.getSimpleName(), "sendData (" + event + ") " + dataString);
+            mSocket.emit(event, dataString);
+        } else
+        {
+            WWLogger.get().log(Level.SEVERE, "sendData (" + event + ") error socket not connected " + dataString);
+        }
     }
 
     @Override
