@@ -4,6 +4,7 @@ import android.util.Log;
 
 import com.fanwe.lib.wwjsdk.log.WWLogger;
 import com.fanwe.lib.wwjsdk.sdk.IWWControlSDK;
+import com.fanwe.lib.wwjsdk.sdk.WWSDKManager;
 import com.fanwe.lib.wwjsdk.sdk.callback.WWControlSDKCallback;
 import com.fanwe.lib.wwjsdk.sdk.request.WWControlParam;
 import com.fanwe.lib.wwjsdk.sdk.response.WWCatchResultData;
@@ -41,11 +42,10 @@ public class WWSocket implements WWControlSDKCallback
     public static final String EVENT_RESPONSE_HEART_BEAT = "ww_response_heart_beat";
 
     private Socket mSocket;
-    private IWWControlSDK mControlSDK;
 
-    public void setControlSDK(IWWControlSDK controlSDK)
+    private IWWControlSDK getControlSDK()
     {
-        mControlSDK = controlSDK;
+        return WWSDKManager.getInstance().getControlSDK();
     }
 
     public boolean isConnected()
@@ -93,7 +93,7 @@ public class WWSocket implements WWControlSDKCallback
                 @Override
                 protected void onReceive(String json, Object... args)
                 {
-                    mControlSDK.init(json);
+                    getControlSDK().init(json);
                     sendData(getEvent(), SocketResponseModel.newOk(null));
                 }
             });
@@ -102,7 +102,7 @@ public class WWSocket implements WWControlSDKCallback
                 @Override
                 protected void onReceive(WWControlParam param, String json, Object... args)
                 {
-                    sendControlResultData(getEvent(), mControlSDK.begin(json));
+                    sendControlResultData(getEvent(), getControlSDK().begin(json));
                 }
             });
             mSocket.on(EVENT_FRONT, new WWControlParamListener(EVENT_FRONT)
@@ -110,7 +110,7 @@ public class WWSocket implements WWControlSDKCallback
                 @Override
                 protected void onReceive(WWControlParam param, String json, Object[] args)
                 {
-                    sendControlResultData(getEvent(), mControlSDK.moveFront(json));
+                    sendControlResultData(getEvent(), getControlSDK().moveFront(json));
                 }
             });
             mSocket.on(EVENT_BACK, new WWControlParamListener(EVENT_BACK)
@@ -118,7 +118,7 @@ public class WWSocket implements WWControlSDKCallback
                 @Override
                 protected void onReceive(WWControlParam param, String json, Object[] args)
                 {
-                    sendControlResultData(getEvent(), mControlSDK.moveBack(json));
+                    sendControlResultData(getEvent(), getControlSDK().moveBack(json));
                 }
             });
             mSocket.on(EVENT_LEFT, new WWControlParamListener(EVENT_LEFT)
@@ -126,7 +126,7 @@ public class WWSocket implements WWControlSDKCallback
                 @Override
                 protected void onReceive(WWControlParam param, String json, Object[] args)
                 {
-                    sendControlResultData(getEvent(), mControlSDK.moveLeft(json));
+                    sendControlResultData(getEvent(), getControlSDK().moveLeft(json));
                 }
             });
             mSocket.on(EVENT_RIGHT, new WWControlParamListener(EVENT_RIGHT)
@@ -134,7 +134,7 @@ public class WWSocket implements WWControlSDKCallback
                 @Override
                 protected void onReceive(WWControlParam param, String json, Object[] args)
                 {
-                    sendControlResultData(getEvent(), mControlSDK.moveRight(json));
+                    sendControlResultData(getEvent(), getControlSDK().moveRight(json));
                 }
             });
             mSocket.on(EVENT_STOP_MOVE, new WWControlParamListener(EVENT_STOP_MOVE)
@@ -142,7 +142,7 @@ public class WWSocket implements WWControlSDKCallback
                 @Override
                 protected void onReceive(WWControlParam param, String json, Object[] args)
                 {
-                    sendControlResultData(getEvent(), mControlSDK.stopMove(json));
+                    sendControlResultData(getEvent(), getControlSDK().stopMove(json));
                 }
             });
             mSocket.on(EVENT_CATCH, new WWControlParamListener(EVENT_CATCH)
@@ -150,7 +150,7 @@ public class WWSocket implements WWControlSDKCallback
                 @Override
                 protected void onReceive(WWControlParam param, String json, Object[] args)
                 {
-                    sendControlResultData(getEvent(), mControlSDK.doCatch(json));
+                    sendControlResultData(getEvent(), getControlSDK().doCatch(json));
                 }
             });
             mSocket.on(EVENT_CHECK, new WWControlParamListener(EVENT_CHECK)
@@ -158,7 +158,7 @@ public class WWSocket implements WWControlSDKCallback
                 @Override
                 protected void onReceive(WWControlParam param, String json, Object[] args)
                 {
-                    sendControlResultData(getEvent(), mControlSDK.check(json));
+                    sendControlResultData(getEvent(), getControlSDK().check(json));
                 }
             });
 
@@ -245,7 +245,7 @@ public class WWSocket implements WWControlSDKCallback
             if (param != null && param.hasDataOriginal())
             {
                 // 如果有原始数据，则只做透传
-                boolean result = mControlSDK.sendData(param.dataOriginal, getEvent());
+                boolean result = getControlSDK().sendData(param.dataOriginal, getEvent());
                 sendControlResultData(getEvent(), result);
             } else
             {
