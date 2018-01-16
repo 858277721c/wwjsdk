@@ -42,6 +42,7 @@ public class WWSocket implements WWControlSDKCallback
     public static final String EVENT_RESPONSE_HEART_BEAT = "ww_response_heart_beat";
 
     private Socket mSocket;
+    private String mUrl;
 
     private IWWControlSDK getControlSDK()
     {
@@ -53,17 +54,24 @@ public class WWSocket implements WWControlSDKCallback
         return mSocket != null && mSocket.connected();
     }
 
-    /**
-     * 初始化socket
-     *
-     * @param url
-     */
-    public void initSocket(String url)
+    public void setUrl(String url)
+    {
+        mUrl = url;
+    }
+
+    public String getUrl()
+    {
+        return mUrl;
+    }
+
+    public void connect()
     {
         if (isConnected())
         {
             return;
         }
+
+        final String url = mUrl;
 
         IO.Options options = new IO.Options();
         options.reconnectionDelay = 100;
@@ -172,6 +180,16 @@ public class WWSocket implements WWControlSDKCallback
         }
     }
 
+    public void disconnect()
+    {
+        if (mSocket != null)
+        {
+            mSocket.disconnect();
+            mSocket = null;
+            WWLogger.get().log(Level.INFO, "Socket try disconnect");
+        }
+    }
+
     private void sendControlResultData(String event, boolean result)
     {
         if (result)
@@ -222,14 +240,6 @@ public class WWSocket implements WWControlSDKCallback
         sendData(EVENT_RESPONSE_HEART_BEAT, data);
     }
 
-    public void onDestroy()
-    {
-        if (mSocket != null)
-        {
-            mSocket.disconnect();
-            WWLogger.get().log(Level.INFO, "Socket onDestroy");
-        }
-    }
 
     private abstract class WWControlParamListener extends SocketJsonListener
     {

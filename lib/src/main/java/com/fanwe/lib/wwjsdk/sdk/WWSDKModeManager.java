@@ -1,5 +1,7 @@
 package com.fanwe.lib.wwjsdk.sdk;
 
+import android.text.TextUtils;
+
 import com.fanwe.lib.http.PostRequest;
 import com.fanwe.lib.http.callback.ModelRequestCallback;
 import com.fanwe.lib.looper.FLooper;
@@ -7,6 +9,7 @@ import com.fanwe.lib.looper.impl.FSimpleLooper;
 import com.fanwe.lib.wwjsdk.log.WWLogger;
 import com.fanwe.lib.wwjsdk.model.InitActModel;
 import com.fanwe.lib.wwjsdk.model.WWServerConfig;
+import com.fanwe.lib.wwjsdk.socketio.WWSocket;
 import com.fanwe.lib.wwjsdk.utils.WWJsonUtil;
 
 import java.util.logging.Level;
@@ -19,6 +22,7 @@ class WWSDKModeManager
     private static WWSDKModeManager sInstance;
 
     private FLooper mLooper = new FSimpleLooper();
+    private WWSocket mSocket = new WWSocket();
 
     private WWSDKModeManager()
     {
@@ -80,7 +84,25 @@ class WWSDKModeManager
             {
                 if (getActModel().getStatus() == 1)
                 {
-
+                    if (getActModel().getType() == 1)
+                    {
+                        String url = getActModel().getSocket_address();
+                        if (!TextUtils.isEmpty(url))
+                        {
+                            if (!url.equals(mSocket.getUrl()))
+                            {
+                                mSocket.disconnect();
+                                mSocket.setUrl(url);
+                            }
+                            mSocket.connect();
+                        } else
+                        {
+                            WWLogger.get().log(Level.SEVERE, "init param error:empty socket_address");
+                        }
+                    } else
+                    {
+                        mSocket.disconnect();
+                    }
                 } else
                 {
                     WWLogger.get().log(Level.SEVERE, "request init fail:" + WWJsonUtil.objectToJson(getActModel()));
