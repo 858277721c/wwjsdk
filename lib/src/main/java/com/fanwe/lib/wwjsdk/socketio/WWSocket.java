@@ -164,12 +164,11 @@ public class WWSocket implements WWControlSDKCallback
 
             //---------- WWControlParam end ----------
 
-            mSocket.connect();
             WWLogger.get().log(Level.INFO, "Socket try connect:" + url);
+            mSocket.connect();
         } catch (URISyntaxException e)
         {
-            e.printStackTrace();
-            WWLogger.get().log(Level.WARNING, "Socket connect error: " + e, e);
+            WWLogger.get().log(Level.SEVERE, "Socket connect error: " + e, e);
         }
     }
 
@@ -186,20 +185,22 @@ public class WWSocket implements WWControlSDKCallback
 
     private void sendData(String event, Object data)
     {
-        if (mSocket.connected())
+        if (!isConnected())
         {
-            String resultData = null;
-            if (data instanceof String)
-            {
-                resultData = (String) data;
-            } else
-            {
-                resultData = WWJsonUtil.objectToJson(data);
-            }
-
-            Log.i(WWSocket.class.getSimpleName(), "sendData (" + event + ") " + resultData);
-            mSocket.emit(event, resultData);
+            return;
         }
+
+        String resultData = null;
+        if (data instanceof String)
+        {
+            resultData = (String) data;
+        } else
+        {
+            resultData = WWJsonUtil.objectToJson(data);
+        }
+
+        Log.i(WWSocket.class.getSimpleName(), "sendData (" + event + ") " + resultData);
+        mSocket.emit(event, resultData);
     }
 
     @Override
