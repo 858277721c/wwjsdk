@@ -67,9 +67,10 @@ public class WWSDKManager
                 {
                     Class clazz = Class.forName(className);
                     clazz.newInstance();
+                    WWLogger.get().log(Level.INFO, "create default control sdk (" + className + ") success");
                 } catch (Exception e)
                 {
-                    WWLogger.get().log(Level.SEVERE, "init default control sdk (" + className + ") error:" + e, e);
+                    WWLogger.get().log(Level.SEVERE, "create default control sdk (" + className + ") error:" + e, e);
                 }
             }
 
@@ -131,7 +132,7 @@ public class WWSDKManager
             } catch (IOException e)
             {
                 e.printStackTrace();
-                WWLogger.get().log(Level.SEVERE, "init FileHandler error" + e, e);
+                WWLogger.get().log(Level.SEVERE, "create FileHandler error" + e, e);
             }
         }
         return mFileHandler;
