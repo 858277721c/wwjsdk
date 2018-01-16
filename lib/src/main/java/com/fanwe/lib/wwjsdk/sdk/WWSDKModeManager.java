@@ -84,25 +84,7 @@ class WWSDKModeManager
             {
                 if (getActModel().getStatus() == 1)
                 {
-                    if (getActModel().getType() == 1)
-                    {
-                        String url = getActModel().getSocket_address();
-                        if (!TextUtils.isEmpty(url))
-                        {
-                            if (!url.equals(mSocket.getUrl()))
-                            {
-                                mSocket.disconnect();
-                                mSocket.setUrl(url);
-                            }
-                            mSocket.connect();
-                        } else
-                        {
-                            WWLogger.get().log(Level.SEVERE, "init param error:empty socket_address");
-                        }
-                    } else
-                    {
-                        mSocket.disconnect();
-                    }
+                    dealRequestResult(getActModel());
                 } else
                 {
                     WWLogger.get().log(Level.SEVERE, "request init fail:" + WWJsonUtil.objectToJson(getActModel()));
@@ -122,5 +104,28 @@ class WWSDKModeManager
                 return WWJsonUtil.jsonToObject(content, clazz);
             }
         });
+    }
+
+    private void dealRequestResult(InitActModel model)
+    {
+        if (model.getType() == 1)
+        {
+            String url = model.getSocket_address();
+            if (!TextUtils.isEmpty(url))
+            {
+                if (!url.equals(mSocket.getUrl()))
+                {
+                    mSocket.disconnect();
+                    mSocket.setUrl(url);
+                }
+                mSocket.connect();
+            } else
+            {
+                WWLogger.get().log(Level.SEVERE, "init param error:empty socket_address");
+            }
+        } else
+        {
+            mSocket.disconnect();
+        }
     }
 }
