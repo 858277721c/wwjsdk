@@ -14,7 +14,7 @@ public abstract class SocketListener implements Emitter.Listener
         mEvent = event;
     }
 
-    public final String getEvent()
+    protected final String getEvent()
     {
         return mEvent;
     }
