@@ -2,6 +2,8 @@ package com.fanwe.lib.wwjsdk.sdk;
 
 import android.content.Context;
 
+import com.fanwe.lib.holder.FReleasableObjectHolder;
+import com.fanwe.lib.holder.FWeakObjectHolder;
 import com.fanwe.lib.log.FFileHandler;
 import com.fanwe.lib.log.FLogger;
 import com.fanwe.lib.wwjsdk.log.WWLogger;
@@ -17,6 +19,8 @@ public class WWSDKManager
     private static WWSDKManager sInstance;
     private Context mContext;
     private DefaultFileHandler mFileHandler;
+
+    private FWeakObjectHolder<IWWControlSDK> mControlSDKHolder;
 
     private WWSDKManager()
     {
@@ -58,6 +62,39 @@ public class WWSDKManager
                 WWLogger.get().log(Level.WARNING, "WWSDKManager init create FileHandler error");
             }
         }
+    }
+
+    private FWeakObjectHolder<IWWControlSDK> getControlSDKHolder()
+    {
+        if (mControlSDKHolder == null)
+        {
+            mControlSDKHolder = new FWeakObjectHolder<>();
+            mControlSDKHolder.setCallback(new FReleasableObjectHolder.Callback<IWWControlSDK>()
+            {
+                @Override
+                public void onObjectSave(IWWControlSDK object)
+                {
+
+                }
+
+                @Override
+                public void onObjectRelease(IWWControlSDK object)
+                {
+                    object.onDestroy();
+                }
+            });
+        }
+        return mControlSDKHolder;
+    }
+
+    final void setControlSDK(IWWControlSDK controlSDK)
+    {
+        getControlSDKHolder().set(controlSDK);
+    }
+
+    public final IWWControlSDK getControlSDK()
+    {
+        return getControlSDKHolder().get();
     }
 
     /**
