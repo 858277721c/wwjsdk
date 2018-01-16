@@ -60,10 +60,10 @@ public class WWSDKManager
                 fileHandler.addToLogger();
             }
 
-            String className = mContext.getResources().getString(R.string.class_default_ww_control_sdk);
+            final String className = mContext.getResources().getString(R.string.class_default_ww_control_sdk);
             if (!TextUtils.isEmpty(className))
             {
-                String prefix = "create default control sdk (" + className + ") ";
+                final String prefix = "create default control sdk (" + className + ") ";
                 WWLogger.get().log(Level.INFO, prefix + "start");
                 try
                 {
