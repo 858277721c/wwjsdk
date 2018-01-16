@@ -131,7 +131,6 @@ public class WWSDKManager
                 mFileHandler = new DefaultFileHandler(mContext);
             } catch (IOException e)
             {
-                e.printStackTrace();
                 WWLogger.get().log(Level.SEVERE, "create FileHandler error" + e, e);
             }
         }
