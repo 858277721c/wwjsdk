@@ -69,7 +69,6 @@ class WWSDKModeManager
         String url = config.initUrl;
         PostRequest request = new PostRequest(url);
         request.param("key", "f8639bc67513dbbc3713ddc835b7f156");
-        request.param("mac", "f8639bc67513dbbc3713ddc835b7f156");
 
         request.execute(new ModelRequestCallback<InitActModel>()
         {
