@@ -2,8 +2,8 @@ package com.fanwe.lib.wwjsdk.sdk;
 
 import android.content.Context;
 
-import com.fanwe.lib.holder.FReleasableObjectHolder;
-import com.fanwe.lib.holder.FWeakObjectHolder;
+import com.fanwe.lib.holder.FObjectHolder;
+import com.fanwe.lib.holder.FStrongObjectHolder;
 import com.fanwe.lib.log.FFileHandler;
 import com.fanwe.lib.log.FLogger;
 import com.fanwe.lib.wwjsdk.log.WWLogger;
@@ -20,7 +20,7 @@ public class WWSDKManager
     private Context mContext;
     private DefaultFileHandler mFileHandler;
 
-    private FWeakObjectHolder<IWWControlSDK> mControlSDKHolder;
+    private FObjectHolder<IWWControlSDK> mControlSDKHolder;
 
     private WWSDKManager()
     {
@@ -64,17 +64,17 @@ public class WWSDKManager
         }
     }
 
-    private FWeakObjectHolder<IWWControlSDK> getControlSDKHolder()
+    private FObjectHolder<IWWControlSDK> getControlSDKHolder()
     {
         if (mControlSDKHolder == null)
         {
-            mControlSDKHolder = new FWeakObjectHolder<>();
-            mControlSDKHolder.setCallback(new FReleasableObjectHolder.Callback<IWWControlSDK>()
+            mControlSDKHolder = new FStrongObjectHolder<>();
+            mControlSDKHolder.setCallback(new FObjectHolder.Callback<IWWControlSDK>()
             {
                 @Override
                 public void onObjectSave(IWWControlSDK object)
                 {
-
+                    WWLogger.get().log(Level.INFO, object.getClass().getName() + " instance created");
                 }
 
                 @Override

@@ -24,7 +24,7 @@ dependencies {
 
     compile 'com.github.zj565061763:serialport:1.0.3'
     compile 'com.github.zj565061763:log:1.0.5'
-    compile 'com.github.zj565061763:holder:1.0.4'
+    compile 'com.github.zj565061763:holder:1.0.6'
 
     compile 'com.github.zj565061763:looper:1.0.10'
 
