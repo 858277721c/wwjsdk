@@ -1,8 +1,12 @@
 package com.fanwe.lib.wwjsdk.sdk;
 
+import com.fanwe.lib.http.PostRequest;
+import com.fanwe.lib.http.callback.ModelRequestCallback;
 import com.fanwe.lib.looper.FLooper;
 import com.fanwe.lib.looper.impl.FSimpleLooper;
+import com.fanwe.lib.wwjsdk.model.InitActModel;
 import com.fanwe.lib.wwjsdk.model.WWServerConfig;
+import com.fanwe.lib.wwjsdk.utils.WWJsonUtil;
 
 /**
  * Created by Administrator on 2018/1/16.
@@ -63,6 +67,23 @@ class WWSDKModeManager
             return;
         }
         String url = config.initUrl;
-        // TODO 接口请求
+        PostRequest request = new PostRequest(url);
+        request.param("key", "f8639bc67513dbbc3713ddc835b7f156");
+        request.param("mac", "f8639bc67513dbbc3713ddc835b7f156");
+
+        request.execute(new ModelRequestCallback<InitActModel>()
+        {
+            @Override
+            public void onSuccess()
+            {
+
+            }
+
+            @Override
+            protected InitActModel parseToModel(String content, Class<InitActModel> clazz)
+            {
+                return WWJsonUtil.jsonToObject(content, clazz);
+            }
+        });
     }
 }
