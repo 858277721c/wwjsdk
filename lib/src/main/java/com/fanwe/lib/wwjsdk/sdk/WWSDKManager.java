@@ -61,6 +61,8 @@ public class WWSDKManager
             {
                 WWLogger.get().log(Level.WARNING, "WWSDKManager init create FileHandler error");
             }
+
+            WWSDKModeManager.getInstance().startMonitor(true);
         }
     }
 

@@ -1,12 +1,13 @@
-package com.fanwe.lib.wwjsdk.common;
+package com.fanwe.lib.wwjsdk.sdk;
 
 import com.fanwe.lib.looper.FLooper;
 import com.fanwe.lib.looper.impl.FSimpleLooper;
+import com.fanwe.lib.wwjsdk.model.WWServerConfig;
 
 /**
  * Created by Administrator on 2018/1/16.
  */
-public class WWSDKModeManager
+class WWSDKModeManager
 {
     private static WWSDKModeManager sInstance;
 
@@ -56,6 +57,12 @@ public class WWSDKModeManager
 
     private void onMonitor()
     {
-
+        WWServerConfig config = WWServerConfig.get();
+        if (config == null)
+        {
+            return;
+        }
+        String url = config.initUrl;
+        // TODO 接口请求
     }
 }

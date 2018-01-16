@@ -1,6 +1,7 @@
 package com.fanwe.lib.wwjsdk.model;
 
 import android.os.Environment;
+import android.text.TextUtils;
 
 import com.fanwe.lib.wwjsdk.log.WWLogger;
 
@@ -32,9 +33,15 @@ public class WWServerConfig
         {
             return null;
         }
+        String initUrl = properties.getProperty(KEY_INIT_URL, null);
+        if (TextUtils.isEmpty(initUrl))
+        {
+            WWLogger.get().log(Level.SEVERE, "key_init_url's value is empty");
+            return null;
+        }
 
         WWServerConfig config = new WWServerConfig();
-        config.initUrl = properties.getProperty(KEY_INIT_URL, null);
+        config.initUrl = initUrl;
         return config;
     }
 
@@ -43,6 +50,11 @@ public class WWServerConfig
         try
         {
             File file = new File(Environment.getExternalStorageDirectory(), FILE_NAME);
+            if (file == null || !file.exists())
+            {
+                WWLogger.get().log(Level.SEVERE, "getProperties error: " + FILE_NAME + " not exist");
+                return null;
+            }
 
             Properties properties = new Properties();
             properties.load(new FileInputStream(file));
