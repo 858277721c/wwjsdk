@@ -15,8 +15,8 @@ public abstract class WWControlSDK implements IWWControlSDK
     public WWControlSDK()
     {
         WWSDKManager.getInstance().checkInit();
-        getSerialPort().open();
         WWSDKManager.getInstance().setControlSDK(this);
+        getSerialPort().open();
     }
 
     private WWSerialPort getSerialPort()
