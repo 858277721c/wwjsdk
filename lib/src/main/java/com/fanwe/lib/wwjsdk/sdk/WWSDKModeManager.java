@@ -4,9 +4,12 @@ import com.fanwe.lib.http.PostRequest;
 import com.fanwe.lib.http.callback.ModelRequestCallback;
 import com.fanwe.lib.looper.FLooper;
 import com.fanwe.lib.looper.impl.FSimpleLooper;
+import com.fanwe.lib.wwjsdk.log.WWLogger;
 import com.fanwe.lib.wwjsdk.model.InitActModel;
 import com.fanwe.lib.wwjsdk.model.WWServerConfig;
 import com.fanwe.lib.wwjsdk.utils.WWJsonUtil;
+
+import java.util.logging.Level;
 
 /**
  * Created by Administrator on 2018/1/16.
@@ -75,7 +78,20 @@ class WWSDKModeManager
             @Override
             public void onSuccess()
             {
+                if (getActModel().getStatus() == 1)
+                {
 
+                } else
+                {
+                    WWLogger.get().log(Level.SEVERE, "request init fail:" + WWJsonUtil.objectToJson(getActModel()));
+                }
+            }
+
+            @Override
+            public void onError(Exception e)
+            {
+                super.onError(e);
+                WWLogger.get().log(Level.SEVERE, "request init error:" + e, e);
             }
 
             @Override
