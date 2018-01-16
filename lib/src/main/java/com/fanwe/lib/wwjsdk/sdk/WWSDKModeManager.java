@@ -57,6 +57,7 @@ class WWSDKModeManager
                 @Override
                 public void run()
                 {
+                    WWLogger.get().log(Level.INFO, "onMonitor sdk mode");
                     onMonitor();
                 }
             });
