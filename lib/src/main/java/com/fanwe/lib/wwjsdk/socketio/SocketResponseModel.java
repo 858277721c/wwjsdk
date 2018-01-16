@@ -11,13 +11,13 @@ public class SocketResponseModel
      */
     public static final int CODE_OK = 0;
     /**
-     * 参数错误
-     */
-    public static final int CODE_PARAM_ERROR = 100;
-    /**
      * app内部错误
      */
-    public static final int CODE_INTERNAL_ERROR = 101;
+    public static final int CODE_INTERNAL_ERROR = 100;
+    /**
+     * 参数错误
+     */
+    public static final int CODE_PARAM_ERROR = 101;
 
     public int code;
     public String msg;
@@ -29,7 +29,6 @@ public class SocketResponseModel
         {
             msg = "ok";
         }
-
         SocketResponseModel model = new SocketResponseModel();
         model.code = CODE_OK;
         model.msg = msg;
@@ -42,7 +41,6 @@ public class SocketResponseModel
         {
             msg = "app internal error";
         }
-
         SocketResponseModel model = new SocketResponseModel();
         model.code = CODE_INTERNAL_ERROR;
         model.msg = msg;
@@ -55,7 +53,6 @@ public class SocketResponseModel
         {
             msg = "param error";
         }
-
         SocketResponseModel model = new SocketResponseModel();
         model.code = CODE_PARAM_ERROR;
         model.msg = msg;
