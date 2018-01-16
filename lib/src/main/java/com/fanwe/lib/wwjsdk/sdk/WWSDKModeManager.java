@@ -45,26 +45,18 @@ class WWSDKModeManager
 
     /**
      * 开始监听
-     *
-     * @param start
      */
-    public void startMonitor(boolean start)
+    public void startMonitor()
     {
-        if (start)
+        mLooper.start(30 * 1000, new Runnable()
         {
-            mLooper.start(30 * 1000, new Runnable()
+            @Override
+            public void run()
             {
-                @Override
-                public void run()
-                {
-                    WWLogger.get().log(Level.INFO, "onMonitor sdk mode");
-                    onMonitor();
-                }
-            });
-        } else
-        {
-            mLooper.stop();
-        }
+                WWLogger.get().log(Level.INFO, "onMonitor sdk mode");
+                onMonitor();
+            }
+        });
     }
 
     private void onMonitor()

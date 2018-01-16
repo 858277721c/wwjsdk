@@ -74,7 +74,7 @@ public class WWSDKManager
                 }
             }
 
-            WWSDKModeManager.getInstance().startMonitor(true);
+            WWSDKModeManager.getInstance().startMonitor();
 
             WWLogger.get().log(Level.INFO, "WWSDKManager init finish");
         }
