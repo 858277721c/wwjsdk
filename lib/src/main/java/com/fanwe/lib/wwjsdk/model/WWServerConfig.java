@@ -17,9 +17,9 @@ public class WWServerConfig
 {
     public static final String FILE_NAME = "fanwe_wwserver.txt";
 
-    public static final String KEY_SOCKET_URL = "key_socket_url";
+    public static final String KEY_INIT_URL = "key_init_url";
 
-    public String socketUrl;
+    public String initUrl;
 
     private WWServerConfig()
     {
@@ -34,7 +34,7 @@ public class WWServerConfig
         }
 
         WWServerConfig config = new WWServerConfig();
-        config.socketUrl = properties.getProperty(KEY_SOCKET_URL, null);
+        config.initUrl = properties.getProperty(KEY_INIT_URL, null);
         return config;
     }
 
