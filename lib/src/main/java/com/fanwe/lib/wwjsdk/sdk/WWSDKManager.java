@@ -74,7 +74,7 @@ public class WWSDKManager
                 @Override
                 public void onObjectSave(IWWControlSDK object)
                 {
-
+                    WWLogger.get().log(Level.INFO, object.getClass().getName() + " instance created");
                 }
 
                 @Override
