@@ -1,11 +1,13 @@
 package com.fanwe.lib.wwjsdk.sdk;
 
 import android.content.Context;
+import android.text.TextUtils;
 
 import com.fanwe.lib.holder.FObjectHolder;
 import com.fanwe.lib.holder.FStrongObjectHolder;
 import com.fanwe.lib.log.FFileHandler;
 import com.fanwe.lib.log.FLogger;
+import com.fanwe.lib.wwjsdk.R;
 import com.fanwe.lib.wwjsdk.log.WWLogger;
 
 import java.io.IOException;
@@ -56,6 +58,19 @@ public class WWSDKManager
             if (fileHandler != null)
             {
                 fileHandler.addToLogger();
+            }
+
+            String className = mContext.getResources().getString(R.string.class_default_ww_control_sdk);
+            if (!TextUtils.isEmpty(className))
+            {
+                try
+                {
+                    Class clazz = Class.forName(className);
+                    clazz.newInstance();
+                } catch (Exception e)
+                {
+                    WWLogger.get().log(Level.SEVERE, "init default control sdk (" + className + ") error:" + e, e);
+                }
             }
 
             WWLogger.get().log(Level.INFO, "WWSDKManager init finish");
