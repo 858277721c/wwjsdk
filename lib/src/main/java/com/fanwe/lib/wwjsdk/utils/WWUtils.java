@@ -1,5 +1,8 @@
 package com.fanwe.lib.wwjsdk.utils;
 
+import java.net.NetworkInterface;
+import java.net.SocketException;
+import java.util.Enumeration;
 import java.util.List;
 
 /**
@@ -46,5 +49,40 @@ public class WWUtils
         }
         sb.deleteCharAt(sb.length() - 1);
         return sb.toString();
+    }
+
+    public static String getMacAddress()
+    {
+        try
+        {
+            Enumeration<NetworkInterface> interfaces = NetworkInterface.getNetworkInterfaces();
+            while (interfaces.hasMoreElements())
+            {
+                NetworkInterface item = interfaces.nextElement();
+
+                byte[] arrAddress = item.getHardwareAddress();
+                if (arrAddress == null || arrAddress.length <= 0)
+                {
+                    continue;
+                } else
+                {
+                    StringBuilder sb = new StringBuilder();
+                    for (byte address : arrAddress)
+                    {
+                        sb.append(address).append(":");
+                    }
+                    if (sb.length() > 0)
+                    {
+                        sb.deleteCharAt(sb.length() - 1);
+                    }
+                    return sb.toString();
+                }
+            }
+        } catch (SocketException e)
+        {
+            e.printStackTrace();
+        }
+
+        return "";
     }
 }

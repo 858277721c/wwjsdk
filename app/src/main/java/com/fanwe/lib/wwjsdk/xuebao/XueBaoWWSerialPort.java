@@ -12,10 +12,7 @@ import com.fanwe.lib.wwjsdk.sdk.response.WWHeartBeatData;
 import com.fanwe.lib.wwjsdk.sdk.serialport.WWSerialPort;
 import com.fanwe.lib.wwjsdk.utils.WWUtils;
 
-import java.net.NetworkInterface;
-import java.net.SocketException;
 import java.util.ArrayList;
-import java.util.Enumeration;
 import java.util.List;
 import java.util.logging.Level;
 
@@ -208,7 +205,7 @@ public class XueBaoWWSerialPort extends WWSerialPort
                 WWHeartBeatData heartBeatData = new WWHeartBeatData();
                 heartBeatData.dataOriginal = data;
 
-                heartBeatData.mac = getMacAddress();
+                heartBeatData.mac = WWUtils.getMacAddress();
 
                 WWLogger.get().log(Level.INFO, "receive data (heart beat): " + heartBeatData.mac);
                 getCallback().onDataHeartBeat(heartBeatData);
@@ -216,40 +213,5 @@ public class XueBaoWWSerialPort extends WWSerialPort
             default:
                 break;
         }
-    }
-
-    public static String getMacAddress()
-    {
-        try
-        {
-            Enumeration<NetworkInterface> interfaces = NetworkInterface.getNetworkInterfaces();
-            while (interfaces.hasMoreElements())
-            {
-                NetworkInterface item = interfaces.nextElement();
-
-                byte[] arrAddress = item.getHardwareAddress();
-                if (arrAddress == null || arrAddress.length <= 0)
-                {
-                    continue;
-                } else
-                {
-                    StringBuilder sb = new StringBuilder();
-                    for (byte address : arrAddress)
-                    {
-                        sb.append(address).append(":");
-                    }
-                    if (sb.length() > 0)
-                    {
-                        sb.deleteCharAt(sb.length() - 1);
-                    }
-                    return sb.toString();
-                }
-            }
-        } catch (SocketException e)
-        {
-            e.printStackTrace();
-        }
-
-        return "";
     }
 }
