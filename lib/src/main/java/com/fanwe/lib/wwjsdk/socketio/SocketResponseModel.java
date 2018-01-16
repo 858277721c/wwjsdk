@@ -14,10 +14,6 @@ public class SocketResponseModel
      * app内部错误
      */
     public static final int CODE_INTERNAL_ERROR = 100;
-    /**
-     * 参数错误
-     */
-    public static final int CODE_PARAM_ERROR = 101;
 
     public int code;
     public String msg;
@@ -43,18 +39,6 @@ public class SocketResponseModel
         }
         SocketResponseModel model = new SocketResponseModel();
         model.code = CODE_INTERNAL_ERROR;
-        model.msg = msg;
-        return model;
-    }
-
-    public static SocketResponseModel newParamError(String msg)
-    {
-        if (msg == null)
-        {
-            msg = "param error";
-        }
-        SocketResponseModel model = new SocketResponseModel();
-        model.code = CODE_PARAM_ERROR;
         model.msg = msg;
         return model;
     }
