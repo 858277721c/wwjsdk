@@ -23,6 +23,7 @@ class WWSDKModeManager
 
     private FLooper mLooper = new FSimpleLooper();
     private WWSocket mSocket = new WWSocket();
+    private int mMode = Mode.TENCENT;
 
     private WWSDKModeManager()
     {
@@ -41,6 +42,16 @@ class WWSDKModeManager
             }
         }
         return sInstance;
+    }
+
+    /**
+     * 返回当前的sdk模式
+     *
+     * @return {@link Mode}
+     */
+    public int getMode()
+    {
+        return mMode;
     }
 
     /**
@@ -101,7 +112,9 @@ class WWSDKModeManager
 
     private void dealRequestResult(InitActModel model)
     {
-        if (model.getType() == 1)
+        mMode = model.getType();
+
+        if (mMode == Mode.FANWE)
         {
             String url = model.getSocket_address();
             if (!TextUtils.isEmpty(url))
@@ -120,5 +133,11 @@ class WWSDKModeManager
         {
             mSocket.disconnect();
         }
+    }
+
+    public static final class Mode
+    {
+        public static final int TENCENT = 0;
+        public static final int FANWE = 1;
     }
 }
