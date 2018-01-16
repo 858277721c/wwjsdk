@@ -49,11 +49,6 @@ public class WWSocket implements WWControlSDKCallback
         return WWSDKManager.getInstance().getControlSDK();
     }
 
-    public boolean isConnected()
-    {
-        return mSocket != null && mSocket.connected();
-    }
-
     public void setUrl(String url)
     {
         mUrl = url;
@@ -62,6 +57,11 @@ public class WWSocket implements WWControlSDKCallback
     public String getUrl()
     {
         return mUrl;
+    }
+
+    public boolean isConnected()
+    {
+        return mSocket != null && mSocket.connected();
     }
 
     public void connect()
