@@ -56,11 +56,9 @@ public class WWSDKManager
             if (fileHandler != null)
             {
                 fileHandler.addToLogger();
-                WWLogger.get().log(Level.INFO, "WWSDKManager init success");
-            } else
-            {
-                WWLogger.get().log(Level.WARNING, "WWSDKManager init create FileHandler error");
             }
+
+            WWLogger.get().log(Level.INFO, "WWSDKManager init finish");
         }
     }
 
@@ -118,7 +116,7 @@ public class WWSDKManager
             } catch (IOException e)
             {
                 e.printStackTrace();
-                WWLogger.get().log(Level.SEVERE, e.toString(), e);
+                WWLogger.get().log(Level.SEVERE, "init FileHandler error" + e, e);
             }
         }
         return mFileHandler;
