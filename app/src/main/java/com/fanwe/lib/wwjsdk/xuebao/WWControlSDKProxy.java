@@ -3,6 +3,7 @@ package com.fanwe.lib.wwjsdk.xuebao;
 import android.text.TextUtils;
 
 import com.fanwe.lib.wwjsdk.sdk.IWWControlSDK;
+import com.fanwe.lib.wwjsdk.sdk.WWSDKManager;
 import com.fanwe.lib.wwjsdk.sdk.callback.WWControlSDKCallback;
 import com.fanwe.lib.wwjsdk.sdk.proxy.IWWControlSDKProxy;
 import com.fanwe.lib.wwjsdk.sdk.request.WWInitParam;
@@ -14,7 +15,6 @@ import com.fanwe.lib.wwjsdk.utils.WWJsonUtil;
  */
 public final class WWControlSDKProxy implements IWWControlSDKProxy
 {
-    private IWWControlSDK mControlSDK = new XueBaoWWControlSDK();
     private String mJsonMove;
     private FProbabilityHandler mProbabilityHandler = new FProbabilityHandler();
 
@@ -30,6 +30,11 @@ public final class WWControlSDKProxy implements IWWControlSDKProxy
         return mJsonMove;
     }
 
+    private IWWControlSDK getControlSDK()
+    {
+        return WWSDKManager.getInstance().getControlSDK();
+    }
+
     @Override
     public void init(int keepCatch)
     {
@@ -43,7 +48,7 @@ public final class WWControlSDKProxy implements IWWControlSDKProxy
         }
 
         String jsonString = WWJsonUtil.objectToJson(param);
-        mControlSDK.init(jsonString);
+        getControlSDK().init(jsonString);
     }
 
     @Override
@@ -59,13 +64,13 @@ public final class WWControlSDKProxy implements IWWControlSDKProxy
     @Override
     public void setCallback(WWControlSDKCallback callback)
     {
-        mControlSDK.setCallback(callback);
+        getControlSDK().setCallback(callback);
     }
 
     @Override
     public boolean begin()
     {
-        return mControlSDK.begin(null);
+        return getControlSDK().begin(null);
     }
 
     //---------- move start ----------
@@ -73,25 +78,25 @@ public final class WWControlSDKProxy implements IWWControlSDKProxy
     @Override
     public boolean moveFront()
     {
-        return mControlSDK.moveBack(getJsonMove());
+        return getControlSDK().moveBack(getJsonMove());
     }
 
     @Override
     public boolean moveBack()
     {
-        return mControlSDK.moveFront(getJsonMove());
+        return getControlSDK().moveFront(getJsonMove());
     }
 
     @Override
     public boolean moveLeft()
     {
-        return mControlSDK.moveLeft(getJsonMove());
+        return getControlSDK().moveLeft(getJsonMove());
     }
 
     @Override
     public boolean moveRight()
     {
-        return mControlSDK.moveRight(getJsonMove());
+        return getControlSDK().moveRight(getJsonMove());
     }
 
     //---------- move end ----------
@@ -99,18 +104,18 @@ public final class WWControlSDKProxy implements IWWControlSDKProxy
     @Override
     public boolean stopMove()
     {
-        return mControlSDK.stopMove(null);
+        return getControlSDK().stopMove(null);
     }
 
     @Override
     public boolean doCatch()
     {
-        return mControlSDK.doCatch(null);
+        return getControlSDK().doCatch(null);
     }
 
     @Override
     public boolean check()
     {
-        return mControlSDK.check(null);
+        return getControlSDK().check(null);
     }
 }
