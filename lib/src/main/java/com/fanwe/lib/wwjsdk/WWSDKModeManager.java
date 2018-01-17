@@ -9,6 +9,8 @@ import com.fanwe.lib.looper.impl.FSimpleLooper;
 import com.fanwe.lib.wwjsdk.log.WWLogger;
 import com.fanwe.lib.wwjsdk.model.InitActModel;
 import com.fanwe.lib.wwjsdk.model.WWServerConfig;
+import com.fanwe.lib.wwjsdk.sdk.IWWControlSDK;
+import com.fanwe.lib.wwjsdk.sdk.WWControlSDK;
 import com.fanwe.lib.wwjsdk.socketio.WWSocket;
 import com.fanwe.lib.wwjsdk.utils.WWJsonUtil;
 
@@ -17,13 +19,13 @@ import java.util.logging.Level;
 /**
  * Created by Administrator on 2018/1/16.
  */
-class WWSDKModeManager
+public class WWSDKModeManager
 {
     private static WWSDKModeManager sInstance;
 
     private FLooper mLooper = new FSimpleLooper();
     private WWSocket mSocket = new WWSocket();
-    private int mMode = Mode.TENCENT;
+    private int mMode = Mode.OTHER;
 
     private WWSDKModeManager()
     {
@@ -44,14 +46,22 @@ class WWSDKModeManager
         return sInstance;
     }
 
+
     /**
-     * 返回当前的sdk模式
+     * 根据请求的mode返回sdk对象
      *
-     * @return {@link Mode}
+     * @param requestMode {@link Mode}
+     * @return
      */
-    public int getMode()
+    public IWWControlSDK getControlSDKByMode(int requestMode)
     {
-        return mMode;
+        if (mMode == requestMode)
+        {
+            return WWControlSDK.getInstance();
+        } else
+        {
+            return IWWControlSDK.EMPTY;
+        }
     }
 
     /**
@@ -141,7 +151,7 @@ class WWSDKModeManager
 
     public static final class Mode
     {
-        public static final int TENCENT = 0;
+        public static final int OTHER = 0;
         public static final int FANWE = 1;
     }
 }

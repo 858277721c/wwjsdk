@@ -2,6 +2,7 @@ package com.fanwe.lib.wwjsdk.socketio;
 
 import android.util.Log;
 
+import com.fanwe.lib.wwjsdk.WWSDKModeManager;
 import com.fanwe.lib.wwjsdk.log.WWLogger;
 import com.fanwe.lib.wwjsdk.sdk.IWWControlSDK;
 import com.fanwe.lib.wwjsdk.sdk.WWControlSDK;
@@ -47,7 +48,7 @@ public class WWSocket
 
     private IWWControlSDK getControlSDK()
     {
-        return WWControlSDK.getInstance();
+        return WWSDKModeManager.getInstance().getControlSDKByMode(WWSDKModeManager.Mode.FANWE);
     }
 
     public void setUrl(String url)

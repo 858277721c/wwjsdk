@@ -5,6 +5,7 @@ import android.text.TextUtils;
 
 import com.fanwe.lib.wwjsdk.R;
 import com.fanwe.lib.wwjsdk.WWSDKManager;
+import com.fanwe.lib.wwjsdk.WWSDKModeManager;
 import com.fanwe.lib.wwjsdk.log.WWLogger;
 import com.fanwe.lib.wwjsdk.sdk.IWWControlSDK;
 import com.fanwe.lib.wwjsdk.sdk.WWControlSDK;
@@ -72,7 +73,7 @@ public abstract class WWControlSDKProxy implements IWWControlSDKProxy
 
     protected final IWWControlSDK getControlSDK()
     {
-        return WWControlSDK.getInstance();
+        return WWSDKModeManager.getInstance().getControlSDKByMode(WWSDKModeManager.Mode.OTHER);
     }
 
     @Override
