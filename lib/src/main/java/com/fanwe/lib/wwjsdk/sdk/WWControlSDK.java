@@ -2,6 +2,9 @@ package com.fanwe.lib.wwjsdk.sdk;
 
 import com.fanwe.lib.wwjsdk.sdk.callback.WWControlSDKCallback;
 import com.fanwe.lib.wwjsdk.sdk.request.WWInitParam;
+import com.fanwe.lib.wwjsdk.sdk.response.WWCatchResultData;
+import com.fanwe.lib.wwjsdk.sdk.response.WWCheckResultData;
+import com.fanwe.lib.wwjsdk.sdk.response.WWHeartBeatData;
 import com.fanwe.lib.wwjsdk.sdk.serialport.IWWSerialPortDataBuilder;
 import com.fanwe.lib.wwjsdk.sdk.serialport.WWSerialPort;
 import com.fanwe.lib.wwjsdk.sdk.serialport.WWSerialPortDataBuilder;
@@ -30,6 +33,26 @@ public abstract class WWControlSDK implements IWWControlSDK
             {
                 throw new NullPointerException("you must provide a WWSerialPort before this");
             }
+            mSerialPort.setCallback(new WWControlSDKCallback()
+            {
+                @Override
+                public void onDataCatchResult(WWCatchResultData data)
+                {
+
+                }
+
+                @Override
+                public void onDataCheckResult(WWCheckResultData data)
+                {
+
+                }
+
+                @Override
+                public void onDataHeartBeat(WWHeartBeatData data)
+                {
+
+                }
+            });
         }
         return mSerialPort;
     }
@@ -126,7 +149,7 @@ public abstract class WWControlSDK implements IWWControlSDK
     {
         if (mSerialPort != null)
         {
-            mSerialPort.onDestroy();
+            mSerialPort.close();
         }
     }
 
