@@ -204,6 +204,7 @@ public abstract class WWControlSDK implements IWWControlSDK
         if (mSerialPort != null)
         {
             mSerialPort.close();
+            sInstance = null;
         }
     }
 
