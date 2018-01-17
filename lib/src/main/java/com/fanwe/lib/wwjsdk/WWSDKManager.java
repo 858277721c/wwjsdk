@@ -1,4 +1,4 @@
-package com.fanwe.lib.wwjsdk.sdk;
+package com.fanwe.lib.wwjsdk;
 
 import android.content.Context;
 

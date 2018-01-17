@@ -7,7 +7,7 @@ import com.fanwe.lib.wwjsdk.R;
 import com.fanwe.lib.wwjsdk.log.WWLogger;
 import com.fanwe.lib.wwjsdk.sdk.IWWControlSDK;
 import com.fanwe.lib.wwjsdk.sdk.WWControlSDK;
-import com.fanwe.lib.wwjsdk.sdk.WWSDKManager;
+import com.fanwe.lib.wwjsdk.WWSDKManager;
 import com.fanwe.lib.wwjsdk.sdk.callback.WWControlSDKCallback;
 import com.fanwe.lib.wwjsdk.sdk.request.WWInitParam;
 import com.fanwe.lib.wwjsdk.utils.FProbabilityHandler;

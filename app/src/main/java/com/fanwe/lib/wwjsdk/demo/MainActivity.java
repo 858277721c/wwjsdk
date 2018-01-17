@@ -7,7 +7,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 
-import com.fanwe.lib.wwjsdk.sdk.WWSDKManager;
+import com.fanwe.lib.wwjsdk.WWSDKManager;
 import com.fanwe.lib.wwjsdk.sdk.callback.WWControlSDKCallback;
 import com.fanwe.lib.wwjsdk.sdk.constants.WWCatchResult;
 import com.fanwe.lib.wwjsdk.sdk.constants.WWState;
