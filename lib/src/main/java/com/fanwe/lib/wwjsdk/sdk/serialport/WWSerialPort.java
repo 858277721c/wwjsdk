@@ -131,18 +131,18 @@ public abstract class WWSerialPort
         final String suffix = WWUtils.byte2HexString(data, data.length) + " " + desc;
         if (!getSerialPort().isOpened())
         {
-            WWLogger.get().log(Level.WARNING, "send data error: SerialPort is not open " + suffix);
+            WWLogger.get().log(Level.WARNING, "SerialPort send data error: SerialPort is not open " + suffix);
             return false;
         }
         try
         {
             getSerialPort().getOutputStream().write(data);
             getSerialPort().getOutputStream().flush();
-            WWLogger.get().log(Level.INFO, "send data " + suffix);
+            WWLogger.get().log(Level.INFO, "SerialPort send data " + suffix);
             return true;
         } catch (IOException e)
         {
-            WWLogger.get().log(Level.SEVERE, " send data error: " + e + " " + suffix, e);
+            WWLogger.get().log(Level.SEVERE, "SerialPort send data error: " + e + " " + suffix, e);
             return false;
         }
     }
