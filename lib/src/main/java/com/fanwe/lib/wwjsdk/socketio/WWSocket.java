@@ -189,10 +189,10 @@ public class WWSocket
     {
         if (mSocket != null)
         {
+            WWLogger.get().log(Level.INFO, "Socket try disconnect");
+            WWControlSDK.getInstance().removeCallback(mControlSDKCallback);
             mSocket.disconnect();
             mSocket = null;
-            WWControlSDK.getInstance().removeCallback(mControlSDKCallback);
-            WWLogger.get().log(Level.INFO, "Socket try disconnect");
         }
     }
 
@@ -207,7 +207,7 @@ public class WWSocket
         }
     }
 
-    private void sendData(String event, Object data)
+    private boolean sendData(String event, Object data)
     {
         String dataString = null;
         if (data instanceof String)
@@ -218,13 +218,17 @@ public class WWSocket
             dataString = WWJsonUtil.objectToJson(data);
         }
 
+        final String prefix = "Socket sendData (" + event + ") ";
+
         if (isConnected())
         {
-            Log.i(WWSocket.class.getSimpleName(), "sendData (" + event + ") " + dataString);
+            Log.i(WWSocket.class.getSimpleName(), prefix + dataString);
             mSocket.emit(event, dataString);
+            return true;
         } else
         {
-            WWLogger.get().log(Level.SEVERE, "sendData (" + event + ") error socket not connected " + dataString);
+            WWLogger.get().log(Level.SEVERE, prefix + "error socket not connected " + dataString);
+            return false;
         }
     }
 
@@ -233,19 +237,28 @@ public class WWSocket
         @Override
         public void onDataCatchResult(WWCatchResultData data)
         {
-            sendData(EVENT_RESPONSE_CATCH, data);
+            if (sendData(EVENT_RESPONSE_CATCH, data))
+            {
+                WWLogger.get().log(Level.INFO, "Socket send catch result");
+            }
         }
 
         @Override
         public void onDataCheckResult(WWCheckResultData data)
         {
-            sendData(EVENT_RESPONSE_CHECK, data);
+            if (sendData(EVENT_RESPONSE_CHECK, data))
+            {
+                WWLogger.get().log(Level.INFO, "Socket send check result");
+            }
         }
 
         @Override
         public void onDataHeartBeat(WWHeartBeatData data)
         {
-            sendData(EVENT_RESPONSE_HEART_BEAT, data);
+            if (sendData(EVENT_RESPONSE_HEART_BEAT, data))
+            {
+                WWLogger.get().log(Level.INFO, "Socket send heart beat");
+            }
         }
     };
 
