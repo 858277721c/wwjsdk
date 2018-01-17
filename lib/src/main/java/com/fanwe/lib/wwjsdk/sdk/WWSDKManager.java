@@ -103,7 +103,7 @@ public class WWSDKManager
         public DefaultFileHandler(Context context) throws IOException
         {
             super("wwserver",
-                    100 * MB,
+                    50 * MB,
                     context);
         }
 
