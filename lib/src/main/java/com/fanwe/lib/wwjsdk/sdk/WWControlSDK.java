@@ -155,7 +155,7 @@ public abstract class WWControlSDK implements IWWControlSDK
         }
         if (mListCallback.add(callback))
         {
-            WWLogger.get().log(Level.INFO, "add sdk callback:" + callback);
+            WWLogger.get().log(Level.INFO, "add sdk callback:" + callback + " size:" + mListCallback.size());
         }
     }
 
@@ -164,7 +164,7 @@ public abstract class WWControlSDK implements IWWControlSDK
     {
         if (mListCallback.remove(callback))
         {
-            WWLogger.get().log(Level.INFO, "remove sdk callback:" + callback);
+            WWLogger.get().log(Level.INFO, "remove sdk callback:" + callback + " size:" + mListCallback.size());
         }
     }
 
