@@ -48,7 +48,7 @@ public class WWSocket
 
     private IWWControlSDK getControlSDK()
     {
-        return WWSDKModeManager.getInstance().getControlSDKByMode(WWSDKModeManager.Mode.FANWE);
+        return WWControlSDK.getInstanceByMode(WWSDKModeManager.Mode.FANWE);
     }
 
     public void setUrl(String url)

@@ -5,6 +5,7 @@ import android.text.TextUtils;
 
 import com.fanwe.lib.wwjsdk.R;
 import com.fanwe.lib.wwjsdk.WWSDKManager;
+import com.fanwe.lib.wwjsdk.WWSDKModeManager;
 import com.fanwe.lib.wwjsdk.log.WWLogger;
 import com.fanwe.lib.wwjsdk.sdk.callback.WWControlSDKCallback;
 import com.fanwe.lib.wwjsdk.sdk.request.WWInitParam;
@@ -37,6 +38,11 @@ public abstract class WWControlSDK implements IWWControlSDK
         getSerialPort().open();
     }
 
+    /**
+     * 返回控制娃娃机的对象
+     *
+     * @return
+     */
     public static final IWWControlSDK getInstance()
     {
         if (sInstance == null)
@@ -50,6 +56,23 @@ public abstract class WWControlSDK implements IWWControlSDK
             }
         }
         return sInstance;
+    }
+
+    /**
+     * 根据请求模式返回控制对象
+     *
+     * @param mode {@link WWSDKModeManager.Mode}
+     * @return
+     */
+    public static final IWWControlSDK getInstanceByMode(int mode)
+    {
+        if (WWSDKModeManager.getInstance().getMode() == mode)
+        {
+            return getInstance();
+        } else
+        {
+            return EMPTY;
+        }
     }
 
     private final static WWControlSDK newInstance()

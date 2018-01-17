@@ -9,8 +9,6 @@ import com.fanwe.lib.looper.impl.FSimpleLooper;
 import com.fanwe.lib.wwjsdk.log.WWLogger;
 import com.fanwe.lib.wwjsdk.model.InitActModel;
 import com.fanwe.lib.wwjsdk.model.WWServerConfig;
-import com.fanwe.lib.wwjsdk.sdk.IWWControlSDK;
-import com.fanwe.lib.wwjsdk.sdk.WWControlSDK;
 import com.fanwe.lib.wwjsdk.socketio.WWSocket;
 import com.fanwe.lib.wwjsdk.utils.WWJsonUtil;
 
@@ -46,22 +44,14 @@ public class WWSDKModeManager
         return sInstance;
     }
 
-
     /**
-     * 根据请求的mode返回sdk对象
+     * 返回当前的sdk模式
      *
-     * @param requestMode {@link Mode}
-     * @return
+     * @return {@link Mode}
      */
-    public IWWControlSDK getControlSDKByMode(int requestMode)
+    public int getMode()
     {
-        if (mMode == requestMode)
-        {
-            return WWControlSDK.getInstance();
-        } else
-        {
-            return IWWControlSDK.EMPTY;
-        }
+        return mMode;
     }
 
     /**

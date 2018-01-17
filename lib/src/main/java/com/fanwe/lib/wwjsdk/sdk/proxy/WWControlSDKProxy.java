@@ -73,7 +73,7 @@ public abstract class WWControlSDKProxy implements IWWControlSDKProxy
 
     protected final IWWControlSDK getControlSDK()
     {
-        return WWSDKModeManager.getInstance().getControlSDKByMode(WWSDKModeManager.Mode.OTHER);
+        return WWControlSDK.getInstanceByMode(WWSDKModeManager.Mode.OTHER);
     }
 
     @Override
