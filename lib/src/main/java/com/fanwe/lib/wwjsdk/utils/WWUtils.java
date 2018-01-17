@@ -75,16 +75,8 @@ public class WWUtils
                     continue;
                 } else
                 {
-                    StringBuilder sb = new StringBuilder();
-                    for (byte address : arrAddress)
-                    {
-                        sb.append(address).append(":");
-                    }
-                    if (sb.length() > 0)
-                    {
-                        sb.deleteCharAt(sb.length() - 1);
-                    }
-                    return sb.toString();
+                    String address = byte2HexString(arrAddress, arrAddress.length, ":");
+                    return address;
                 }
             }
         } catch (SocketException e)
