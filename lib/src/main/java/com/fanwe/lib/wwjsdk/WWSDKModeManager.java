@@ -2,7 +2,7 @@ package com.fanwe.lib.wwjsdk;
 
 import android.text.TextUtils;
 
-import com.fanwe.lib.http.PostRequest;
+import com.fanwe.lib.http.GetRequest;
 import com.fanwe.lib.http.callback.ModelRequestCallback;
 import com.fanwe.lib.looper.FLooper;
 import com.fanwe.lib.looper.impl.FSimpleLooper;
@@ -87,10 +87,7 @@ public class WWSDKModeManager
         {
             return;
         }
-        String url = config.initUrl;
-        PostRequest request = new PostRequest(url);
-        request.param("key", "f8639bc67513dbbc3713ddc835b7f156");
-
+        GetRequest request = new GetRequest(config.initUrl);
         request.execute(new ModelRequestCallback<InitActModel>()
         {
             @Override
