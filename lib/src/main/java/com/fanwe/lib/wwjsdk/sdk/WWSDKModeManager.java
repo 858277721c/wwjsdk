@@ -64,7 +64,7 @@ class WWSDKModeManager
             @Override
             public void run()
             {
-                WWLogger.get().log(Level.INFO, "monitor sdk mode...");
+                WWLogger.get().log(Level.INFO, "current mode:" + mMode + " start check sdk mode...");
                 onMonitor();
             }
         });

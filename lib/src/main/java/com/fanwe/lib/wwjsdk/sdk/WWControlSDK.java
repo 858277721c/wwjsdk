@@ -58,7 +58,7 @@ public abstract class WWControlSDK implements IWWControlSDK
         if (!TextUtils.isEmpty(className))
         {
             final String prefix = "create sdk (" + className + ") ";
-            WWLogger.get().log(Level.INFO, prefix + " start");
+            WWLogger.get().log(Level.INFO, prefix + "start");
             try
             {
                 Class clazz = Class.forName(className);

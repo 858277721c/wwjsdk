@@ -47,7 +47,7 @@ public abstract class WWControlSDKProxy implements IWWControlSDKProxy
         if (!TextUtils.isEmpty(className))
         {
             final String prefix = "create sdk proxy (" + className + ") ";
-            WWLogger.get().log(Level.INFO, prefix + " start");
+            WWLogger.get().log(Level.INFO, prefix + "start");
             try
             {
                 Class clazz = Class.forName(className);
