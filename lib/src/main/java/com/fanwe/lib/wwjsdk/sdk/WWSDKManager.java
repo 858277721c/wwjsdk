@@ -68,11 +68,17 @@ public class WWSDKManager
                 try
                 {
                     Class clazz = Class.forName(className);
-                    clazz.newInstance();
-                    WWLogger.get().log(Level.INFO, prefix + "success");
+                    Object object = clazz.newInstance();
+                    if (object instanceof WWControlSDK)
+                    {
+                        WWLogger.get().log(Level.INFO, prefix + "success");
+                    } else
+                    {
+                        throw new RuntimeException("\"class_ww_control_sdk\" value in your string.xml must be instance of com.fanwe.lib.wwjsdk.sdk.WWControlSDK");
+                    }
                 } catch (Exception e)
                 {
-                    WWLogger.get().log(Level.SEVERE, prefix + "error:" + e, e);
+                    throw new RuntimeException(e);
                 }
             } else
             {
