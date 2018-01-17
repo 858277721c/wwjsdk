@@ -85,7 +85,7 @@ public class WWSocket
                 @Override
                 public void call(Object... args)
                 {
-                    WWLogger.get().log(Level.INFO, "Socket connect");
+                    WWLogger.get().log(Level.INFO, "Socket connected");
                 }
             });
             mSocket.on(Socket.EVENT_DISCONNECT, new Emitter.Listener()
@@ -93,7 +93,7 @@ public class WWSocket
                 @Override
                 public void call(Object... args)
                 {
-                    WWLogger.get().log(Level.INFO, "Socket disconnect");
+                    WWLogger.get().log(Level.INFO, "Socket disconnected");
                 }
             });
 
