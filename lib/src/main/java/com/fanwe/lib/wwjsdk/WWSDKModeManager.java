@@ -15,7 +15,7 @@ import com.fanwe.lib.wwjsdk.utils.WWJsonUtil;
 import java.util.logging.Level;
 
 /**
- * Created by Administrator on 2018/1/16.
+ * 娃娃机sdk模式管理类
  */
 public class WWSDKModeManager
 {
