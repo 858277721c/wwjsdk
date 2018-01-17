@@ -3,6 +3,7 @@ package com.fanwe.lib.wwjsdk.sdk;
 import com.fanwe.lib.wwjsdk.sdk.callback.WWControlSDKCallback;
 import com.fanwe.lib.wwjsdk.sdk.serialport.IWWSerialPortDataBuilder;
 import com.fanwe.lib.wwjsdk.sdk.serialport.WWSerialPort;
+import com.fanwe.lib.wwjsdk.sdk.serialport.WWSerialPortDataBuilder;
 
 /**
  * 娃娃机控制sdk
@@ -133,7 +134,7 @@ public abstract class WWControlSDK implements IWWControlSDK
      *
      * @return
      */
-    protected abstract IWWSerialPortDataBuilder provideSerialDataBuilder();
+    protected abstract WWSerialPortDataBuilder provideSerialDataBuilder();
 
     /**
      * 提供一个娃娃串口通信对象
