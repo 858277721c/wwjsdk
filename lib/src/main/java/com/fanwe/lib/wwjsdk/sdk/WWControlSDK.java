@@ -51,7 +51,7 @@ public abstract class WWControlSDK implements IWWControlSDK
         return sInstance;
     }
 
-    private static WWControlSDK newInstance()
+    private final static WWControlSDK newInstance()
     {
         final Context context = WWSDKManager.getInstance().getContext();
         final String className = context.getResources().getString(R.string.class_ww_control_sdk);
@@ -82,7 +82,7 @@ public abstract class WWControlSDK implements IWWControlSDK
         }
     }
 
-    private WWSerialPort getSerialPort()
+    private final WWSerialPort getSerialPort()
     {
         if (mSerialPort == null)
         {
@@ -133,7 +133,7 @@ public abstract class WWControlSDK implements IWWControlSDK
         return mSerialPort;
     }
 
-    private IWWSerialPortDataBuilder getSerialDataBuilder()
+    private final IWWSerialPortDataBuilder getSerialDataBuilder()
     {
         if (mSerialDataBuilder == null)
         {
@@ -147,7 +147,7 @@ public abstract class WWControlSDK implements IWWControlSDK
     }
 
     @Override
-    public synchronized void addCallback(WWControlSDKCallback callback)
+    public final synchronized void addCallback(WWControlSDKCallback callback)
     {
         if (callback == null || mListCallback.contains(callback))
         {
@@ -160,7 +160,7 @@ public abstract class WWControlSDK implements IWWControlSDK
     }
 
     @Override
-    public synchronized void removeCallback(WWControlSDKCallback callback)
+    public final synchronized void removeCallback(WWControlSDKCallback callback)
     {
         if (mListCallback.remove(callback))
         {
@@ -169,7 +169,7 @@ public abstract class WWControlSDK implements IWWControlSDK
     }
 
     @Override
-    public void init(WWInitParam param)
+    public final void init(WWInitParam param)
     {
         getSerialDataBuilder().init(param);
     }
@@ -182,28 +182,28 @@ public abstract class WWControlSDK implements IWWControlSDK
     }
 
     @Override
-    public boolean moveFront(String jsonString)
+    public final boolean moveFront(String jsonString)
     {
         byte[] data = getSerialDataBuilder().buildMove(jsonString, IWWSerialPortDataBuilder.Direction.Front);
         return sendData(data, "moveFront");
     }
 
     @Override
-    public boolean moveBack(String jsonString)
+    public final boolean moveBack(String jsonString)
     {
         byte[] data = getSerialDataBuilder().buildMove(jsonString, IWWSerialPortDataBuilder.Direction.Back);
         return sendData(data, "moveBack");
     }
 
     @Override
-    public boolean moveLeft(String jsonString)
+    public final boolean moveLeft(String jsonString)
     {
         byte[] data = getSerialDataBuilder().buildMove(jsonString, IWWSerialPortDataBuilder.Direction.Left);
         return sendData(data, "moveLeft");
     }
 
     @Override
-    public boolean moveRight(String jsonString)
+    public final boolean moveRight(String jsonString)
     {
         byte[] data = getSerialDataBuilder().buildMove(jsonString, IWWSerialPortDataBuilder.Direction.Right);
         return sendData(data, "moveRight");
@@ -242,6 +242,8 @@ public abstract class WWControlSDK implements IWWControlSDK
         if (mSerialPort != null)
         {
             mSerialPort.close();
+            mSerialPort.setCallback(null);
+            mSerialPort = null;
             sInstance = null;
         }
     }
