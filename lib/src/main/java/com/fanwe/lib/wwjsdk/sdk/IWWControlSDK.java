@@ -9,11 +9,18 @@ import com.fanwe.lib.wwjsdk.sdk.request.WWInitParam;
 public interface IWWControlSDK
 {
     /**
-     * 设置回调对象
+     * 添加回调对象
      *
-     * @param callback {@link WWControlSDKCallback}
+     * @param callback
      */
-    void setCallback(WWControlSDKCallback callback);
+    void addCallback(WWControlSDKCallback callback);
+
+    /**
+     * 移除回调对象
+     *
+     * @param callback
+     */
+    void removeCallback(WWControlSDKCallback callback);
 
     /**
      * 初始化本局游戏的参数配置

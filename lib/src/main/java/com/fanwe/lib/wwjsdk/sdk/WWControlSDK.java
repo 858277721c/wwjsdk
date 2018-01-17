@@ -14,6 +14,8 @@ import com.fanwe.lib.wwjsdk.sdk.serialport.IWWSerialPortDataBuilder;
 import com.fanwe.lib.wwjsdk.sdk.serialport.WWSerialPort;
 import com.fanwe.lib.wwjsdk.sdk.serialport.WWSerialPortDataBuilder;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 
 /**
@@ -25,6 +27,8 @@ public abstract class WWControlSDK implements IWWControlSDK
 
     private WWSerialPort mSerialPort;
     private IWWSerialPortDataBuilder mSerialDataBuilder;
+
+    private List<WWControlSDKCallback> mListCallback = new ArrayList<>();
 
     protected WWControlSDK()
     {
@@ -92,19 +96,37 @@ public abstract class WWControlSDK implements IWWControlSDK
                 @Override
                 public void onDataCatchResult(WWCatchResultData data)
                 {
-
+                    synchronized (WWControlSDK.this)
+                    {
+                        for (WWControlSDKCallback item : mListCallback)
+                        {
+                            item.onDataCatchResult(data);
+                        }
+                    }
                 }
 
                 @Override
                 public void onDataCheckResult(WWCheckResultData data)
                 {
-
+                    synchronized (WWControlSDK.this)
+                    {
+                        for (WWControlSDKCallback item : mListCallback)
+                        {
+                            item.onDataCheckResult(data);
+                        }
+                    }
                 }
 
                 @Override
                 public void onDataHeartBeat(WWHeartBeatData data)
                 {
-
+                    synchronized (WWControlSDK.this)
+                    {
+                        for (WWControlSDKCallback item : mListCallback)
+                        {
+                            item.onDataHeartBeat(data);
+                        }
+                    }
                 }
             });
         }
@@ -125,9 +147,19 @@ public abstract class WWControlSDK implements IWWControlSDK
     }
 
     @Override
-    public final void setCallback(WWControlSDKCallback callback)
+    public synchronized void addCallback(WWControlSDKCallback callback)
     {
-        getSerialPort().setCallback(callback);
+        if (callback == null || mListCallback.contains(callback))
+        {
+            return;
+        }
+        mListCallback.add(callback);
+    }
+
+    @Override
+    public synchronized void removeCallback(WWControlSDKCallback callback)
+    {
+        mListCallback.remove(callback);
     }
 
     @Override
