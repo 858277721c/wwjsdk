@@ -49,8 +49,8 @@ public class MainActivity extends AppCompatActivity
 
         WWSDKManager.getInstance().init(this); // 初始化娃娃sdk
 
-        mControlSDK = WWControlSDKProxy.newInstance(); // 创建sdk对象（必须在娃娃sdk初始化之后创建）
-        mControlSDK.setCallback(mCallback); // 设置回调监听
+        mControlSDK = WWControlSDKProxy.getInstance(); // 获取sdk对象（必须在娃娃sdk初始化之后创建）
+        mControlSDK.addCallback(mCallback); // 设置回调监听
     }
 
     /**
@@ -152,4 +152,11 @@ public class MainActivity extends AppCompatActivity
             }
         }
     };
+
+    @Override
+    protected void onDestroy()
+    {
+        super.onDestroy();
+        mControlSDK.removeCallback(mCallback); // 移除监听对象
+    }
 }

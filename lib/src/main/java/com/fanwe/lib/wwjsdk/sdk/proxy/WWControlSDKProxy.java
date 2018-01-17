@@ -19,9 +19,56 @@ import java.util.logging.Level;
  */
 public abstract class WWControlSDKProxy implements IWWControlSDKProxy
 {
+    private static WWControlSDKProxy sInstance;
+
     protected WWControlSDKProxy()
     {
+    }
 
+    public static WWControlSDKProxy getInstance()
+    {
+        if (sInstance == null)
+        {
+            synchronized (WWControlSDKProxy.class)
+            {
+                if (sInstance == null)
+                {
+                    sInstance = newInstance();
+                }
+            }
+        }
+        return sInstance;
+    }
+
+    private static WWControlSDKProxy newInstance()
+    {
+        final Context context = WWSDKManager.getInstance().getContext();
+        final String className = context.getResources().getString(R.string.class_ww_control_sdk_proxy);
+        if (!TextUtils.isEmpty(className))
+        {
+            final String prefix = "create control sdk proxy (" + className + ") ";
+            WWLogger.get().log(Level.INFO, "try " + prefix);
+            try
+            {
+                Class clazz = Class.forName(className);
+                Object object = clazz.newInstance();
+                if (object instanceof WWControlSDKProxy)
+                {
+                    WWLogger.get().log(Level.INFO, prefix + "success");
+                    return (WWControlSDKProxy) object;
+                } else
+                {
+                    throw new RuntimeException("\"class_ww_control_sdk_proxy\" value in your string.xml must be instance of com.fanwe.lib.wwjsdk.sdk.proxy.WWControlSDKProxy");
+                }
+            } catch (Exception e)
+            {
+                throw new RuntimeException(e);
+            }
+        } else
+        {
+            throw new RuntimeException("\"class_ww_control_sdk_proxy\" is not specify in your string.xml for example:" + "\r\n" +
+                    "<string name=\"class_ww_control_sdk_proxy\">com.fanwe.lib.wwjsdk.xuebao.XueBaoWWControlSDKProxy</string>");
+        }
     }
 
     protected final IWWControlSDK getControlSDK()
@@ -30,13 +77,19 @@ public abstract class WWControlSDKProxy implements IWWControlSDKProxy
     }
 
     @Override
-    public void setCallback(WWControlSDKCallback callback)
+    public final void addCallback(WWControlSDKCallback callback)
     {
-        getControlSDK().setCallback(callback);
+        getControlSDK().addCallback(callback);
     }
 
     @Override
-    public void init(int keepCatch)
+    public final void removeCallback(WWControlSDKCallback callback)
+    {
+        getControlSDK().removeCallback(callback);
+    }
+
+    @Override
+    public final void init(int keepCatch)
     {
         WWInitParam param = new WWInitParam();
         if (keepCatch == 1)
@@ -51,7 +104,7 @@ public abstract class WWControlSDKProxy implements IWWControlSDKProxy
     }
 
     @Override
-    public void init(int numerator, int denominator)
+    public final void init(int numerator, int denominator)
     {
         FProbabilityHandler probabilityHandler = new FProbabilityHandler();
         probabilityHandler.setNumerator(numerator);
@@ -107,36 +160,5 @@ public abstract class WWControlSDKProxy implements IWWControlSDKProxy
     public void check()
     {
         getControlSDK().check(null);
-    }
-
-    public static IWWControlSDKProxy newInstance()
-    {
-        final Context context = WWSDKManager.getInstance().getContext();
-        final String className = context.getResources().getString(R.string.class_ww_control_sdk_proxy);
-        if (!TextUtils.isEmpty(className))
-        {
-            final String prefix = "create control sdk proxy (" + className + ") ";
-            WWLogger.get().log(Level.INFO, "try " + prefix);
-            try
-            {
-                Class clazz = Class.forName(className);
-                Object object = clazz.newInstance();
-                if (object instanceof WWControlSDKProxy)
-                {
-                    WWLogger.get().log(Level.INFO, prefix + "success");
-                    return (IWWControlSDKProxy) object;
-                } else
-                {
-                    throw new RuntimeException("\"class_ww_control_sdk_proxy\" value in your string.xml must be instance of com.fanwe.lib.wwjsdk.sdk.proxy.WWControlSDKProxy");
-                }
-            } catch (Exception e)
-            {
-                throw new RuntimeException(e);
-            }
-        } else
-        {
-            throw new RuntimeException("\"class_ww_control_sdk_proxy\" is not specify in your string.xml for example:" + "\r\n" +
-                    "<string name=\"class_ww_control_sdk_proxy\">com.fanwe.lib.wwjsdk.xuebao.XueBaoWWControlSDKProxy</string>");
-        }
     }
 }

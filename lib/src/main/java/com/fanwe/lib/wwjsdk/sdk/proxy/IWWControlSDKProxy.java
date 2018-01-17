@@ -8,11 +8,18 @@ import com.fanwe.lib.wwjsdk.sdk.callback.WWControlSDKCallback;
 public interface IWWControlSDKProxy
 {
     /**
-     * 设置回调对象
+     * 添加回调对象
      *
-     * @param callback {@link WWControlSDKCallback}
+     * @param callback
      */
-    void setCallback(WWControlSDKCallback callback);
+    void addCallback(WWControlSDKCallback callback);
+
+    /**
+     * 移除回调对象
+     *
+     * @param callback
+     */
+    void removeCallback(WWControlSDKCallback callback);
 
     /**
      * 设置本局游戏下爪后，是否保持足够的爪力把娃娃抓起
