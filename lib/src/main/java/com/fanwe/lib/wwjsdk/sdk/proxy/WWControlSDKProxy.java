@@ -4,10 +4,10 @@ import android.content.Context;
 import android.text.TextUtils;
 
 import com.fanwe.lib.wwjsdk.R;
+import com.fanwe.lib.wwjsdk.WWSDKManager;
 import com.fanwe.lib.wwjsdk.log.WWLogger;
 import com.fanwe.lib.wwjsdk.sdk.IWWControlSDK;
 import com.fanwe.lib.wwjsdk.sdk.WWControlSDK;
-import com.fanwe.lib.wwjsdk.WWSDKManager;
 import com.fanwe.lib.wwjsdk.sdk.callback.WWControlSDKCallback;
 import com.fanwe.lib.wwjsdk.sdk.request.WWInitParam;
 import com.fanwe.lib.wwjsdk.utils.FProbabilityHandler;
@@ -78,13 +78,13 @@ public abstract class WWControlSDKProxy implements IWWControlSDKProxy
     @Override
     public final void addCallback(WWControlSDKCallback callback)
     {
-        getControlSDK().addCallback(callback);
+        WWControlSDK.getInstance().addCallback(callback);
     }
 
     @Override
     public final void removeCallback(WWControlSDKCallback callback)
     {
-        getControlSDK().removeCallback(callback);
+        WWControlSDK.getInstance().removeCallback(callback);
     }
 
     @Override

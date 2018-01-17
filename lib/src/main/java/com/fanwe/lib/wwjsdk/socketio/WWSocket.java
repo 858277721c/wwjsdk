@@ -176,7 +176,7 @@ public class WWSocket
             //---------- WWControlParam end ----------
 
             WWLogger.get().log(Level.INFO, "Socket try connect:" + url);
-            getControlSDK().addCallback(mControlSDKCallback);
+            WWControlSDK.getInstance().addCallback(mControlSDKCallback);
             mSocket.connect();
         } catch (URISyntaxException e)
         {
@@ -190,7 +190,7 @@ public class WWSocket
         {
             mSocket.disconnect();
             mSocket = null;
-            getControlSDK().removeCallback(mControlSDKCallback);
+            WWControlSDK.getInstance().removeCallback(mControlSDKCallback);
             WWLogger.get().log(Level.INFO, "Socket try disconnect");
         }
     }
