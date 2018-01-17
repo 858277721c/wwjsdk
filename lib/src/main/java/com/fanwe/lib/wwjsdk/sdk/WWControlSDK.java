@@ -24,7 +24,7 @@ import java.util.logging.Level;
  */
 public abstract class WWControlSDK implements IWWControlSDK
 {
-    private static WWControlSDK sInstance;
+    private static IWWControlSDK sInstance;
 
     private WWSerialPort mSerialPort;
     private IWWSerialPortDataBuilder mSerialDataBuilder;
@@ -37,7 +37,7 @@ public abstract class WWControlSDK implements IWWControlSDK
         getSerialPort().open();
     }
 
-    public static final WWControlSDK getInstance()
+    public static final IWWControlSDK getInstance()
     {
         if (sInstance == null)
         {

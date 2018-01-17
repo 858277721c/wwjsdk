@@ -19,13 +19,13 @@ import java.util.logging.Level;
  */
 public abstract class WWControlSDKProxy implements IWWControlSDKProxy
 {
-    private static WWControlSDKProxy sInstance;
+    private static IWWControlSDKProxy sInstance;
 
     protected WWControlSDKProxy()
     {
     }
 
-    public static WWControlSDKProxy getInstance()
+    public static IWWControlSDKProxy getInstance()
     {
         if (sInstance == null)
         {
