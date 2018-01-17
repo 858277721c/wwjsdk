@@ -64,7 +64,7 @@ public abstract class WWControlSDK implements IWWControlSDK
             mSerialDataBuilder = provideSerialDataBuilder();
             if (mSerialDataBuilder == null)
             {
-                throw new NullPointerException("you must provide a IWWSerialPortDataBuilder before this");
+                throw new NullPointerException("you must provide a WWSerialPortDataBuilder before this");
             }
         }
         return mSerialDataBuilder;
