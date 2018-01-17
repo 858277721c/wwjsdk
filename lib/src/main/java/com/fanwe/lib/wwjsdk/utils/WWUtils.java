@@ -27,6 +27,11 @@ public class WWUtils
 
     public static String byte2HexString(byte[] data, int length)
     {
+        return byte2HexString(data, length, "_");
+    }
+
+    public static String byte2HexString(byte[] data, int length, String joinString)
+    {
         if (data == null || length <= 0)
         {
             return "";
@@ -34,6 +39,10 @@ public class WWUtils
         if (length > data.length)
         {
             length = data.length;
+        }
+        if (joinString == null)
+        {
+            joinString = "";
         }
 
         StringBuilder sb = new StringBuilder("");
@@ -45,7 +54,7 @@ public class WWUtils
                 hex = '0' + hex;
             }
             sb.append(hex.toUpperCase());
-            sb.append("_");
+            sb.append(joinString);
         }
         sb.deleteCharAt(sb.length() - 1);
         return sb.toString();
