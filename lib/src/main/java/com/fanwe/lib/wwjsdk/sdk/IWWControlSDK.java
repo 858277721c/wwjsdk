@@ -1,6 +1,7 @@
 package com.fanwe.lib.wwjsdk.sdk;
 
 import com.fanwe.lib.wwjsdk.sdk.callback.WWControlSDKCallback;
+import com.fanwe.lib.wwjsdk.sdk.request.WWInitParam;
 
 /**
  * 娃娃机控制sdk
@@ -8,18 +9,18 @@ import com.fanwe.lib.wwjsdk.sdk.callback.WWControlSDKCallback;
 public interface IWWControlSDK
 {
     /**
-     * 服务端下发的概率，力度等透传数据，初始化本局游戏的参数配置，json格式，如果为空或者解析失败将使用sdk内部的默认参数
-     *
-     * @param jsonInit 本局游戏的控制参数
-     */
-    void init(String jsonInit);
-
-    /**
      * 设置回调对象
      *
      * @param callback {@link WWControlSDKCallback}
      */
     void setCallback(WWControlSDKCallback callback);
+
+    /**
+     * 初始化本局游戏的参数配置
+     *
+     * @param param 本局游戏的控制参数
+     */
+    void init(WWInitParam param);
 
     /**
      * 开始控制娃娃机

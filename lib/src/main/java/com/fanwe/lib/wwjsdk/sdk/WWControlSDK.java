@@ -1,6 +1,7 @@
 package com.fanwe.lib.wwjsdk.sdk;
 
 import com.fanwe.lib.wwjsdk.sdk.callback.WWControlSDKCallback;
+import com.fanwe.lib.wwjsdk.sdk.request.WWInitParam;
 import com.fanwe.lib.wwjsdk.sdk.serialport.IWWSerialPortDataBuilder;
 import com.fanwe.lib.wwjsdk.sdk.serialport.WWSerialPort;
 import com.fanwe.lib.wwjsdk.sdk.serialport.WWSerialPortDataBuilder;
@@ -47,15 +48,15 @@ public abstract class WWControlSDK implements IWWControlSDK
     }
 
     @Override
-    public void init(String jsonInit)
-    {
-        getSerialDataBuilder().init(jsonInit);
-    }
-
-    @Override
     public final void setCallback(WWControlSDKCallback callback)
     {
         getSerialPort().setCallback(callback);
+    }
+
+    @Override
+    public void init(WWInitParam param)
+    {
+        getSerialDataBuilder().init(param);
     }
 
     @Override
