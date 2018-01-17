@@ -1,6 +1,10 @@
 package com.fanwe.lib.wwjsdk.sdk.serialport;
 
+import com.fanwe.lib.wwjsdk.log.WWLogger;
 import com.fanwe.lib.wwjsdk.sdk.request.WWInitParam;
+import com.fanwe.lib.wwjsdk.utils.WWJsonUtil;
+
+import java.util.logging.Level;
 
 /**
  * 将控制参数转为串口字节数据
@@ -13,6 +17,7 @@ public abstract class WWSerialPortDataBuilder implements IWWSerialPortDataBuilde
     public void init(WWInitParam param)
     {
         mInitParam = param;
+        WWLogger.get().log(Level.INFO, "init:" + param == null ? "" : WWJsonUtil.objectToJson(param));
     }
 
     /**
