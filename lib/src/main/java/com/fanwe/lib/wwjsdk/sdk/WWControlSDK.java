@@ -44,14 +44,14 @@ public abstract class WWControlSDK implements IWWControlSDK
             {
                 if (sInstance == null)
                 {
-                    sInstance = createControlSDK();
+                    sInstance = newInstance();
                 }
             }
         }
         return sInstance;
     }
 
-    private static WWControlSDK createControlSDK()
+    private static WWControlSDK newInstance()
     {
         final Context context = WWSDKManager.getInstance().getContext();
         final String className = context.getResources().getString(R.string.class_ww_control_sdk);
