@@ -1,13 +1,9 @@
 package com.fanwe.lib.wwjsdk.sdk;
 
 import android.content.Context;
-import android.text.TextUtils;
 
-import com.fanwe.lib.holder.FObjectHolder;
-import com.fanwe.lib.holder.FStrongObjectHolder;
 import com.fanwe.lib.log.FFileHandler;
 import com.fanwe.lib.log.FLogger;
-import com.fanwe.lib.wwjsdk.R;
 import com.fanwe.lib.wwjsdk.log.WWLogger;
 
 import java.io.IOException;
@@ -21,8 +17,6 @@ public class WWSDKManager
     private static WWSDKManager sInstance;
     private Context mContext;
     private DefaultFileHandler mFileHandler;
-
-    private FObjectHolder<IWWControlSDK> mControlSDKHolder;
 
     private WWSDKManager()
     {
@@ -66,72 +60,8 @@ public class WWSDKManager
                 fileHandler.addToLogger();
             }
 
-            initControlSDK();
-
             WWLogger.get().log(Level.INFO, "WWSDKManager init finish");
         }
-    }
-
-    private void initControlSDK()
-    {
-        final String className = mContext.getResources().getString(R.string.class_ww_control_sdk);
-        if (!TextUtils.isEmpty(className))
-        {
-            final String prefix = "create control sdk (" + className + ") ";
-            WWLogger.get().log(Level.INFO, "try " + prefix);
-            try
-            {
-                Class clazz = Class.forName(className);
-                Object object = clazz.newInstance();
-                if (object instanceof WWControlSDK)
-                {
-                    WWLogger.get().log(Level.INFO, prefix + "success");
-                } else
-                {
-                    throw new RuntimeException("\"class_ww_control_sdk\" value in your string.xml must be instance of com.fanwe.lib.wwjsdk.sdk.WWControlSDK");
-                }
-            } catch (Exception e)
-            {
-                throw new RuntimeException(e);
-            }
-        } else
-        {
-            throw new RuntimeException("\"class_ww_control_sdk\" is not specify in your string.xml for example:" + "\r\n" +
-                    "<string name=\"class_ww_control_sdk\">com.fanwe.lib.wwjsdk.xuebao.XueBaoWWControlSDK</string>");
-        }
-    }
-
-    private FObjectHolder<IWWControlSDK> getControlSDKHolder()
-    {
-        if (mControlSDKHolder == null)
-        {
-            mControlSDKHolder = new FStrongObjectHolder<>();
-            mControlSDKHolder.setCallback(new FObjectHolder.Callback<IWWControlSDK>()
-            {
-                @Override
-                public void onObjectSave(IWWControlSDK object)
-                {
-                    WWLogger.get().log(Level.INFO, object.getClass().getName() + " instance created");
-                }
-
-                @Override
-                public void onObjectRelease(IWWControlSDK object)
-                {
-                    object.onDestroy();
-                }
-            });
-        }
-        return mControlSDKHolder;
-    }
-
-    final void setControlSDK(IWWControlSDK controlSDK)
-    {
-        getControlSDKHolder().set(controlSDK);
-    }
-
-    public final IWWControlSDK getControlSDK()
-    {
-        return getControlSDKHolder().get();
     }
 
     /**
