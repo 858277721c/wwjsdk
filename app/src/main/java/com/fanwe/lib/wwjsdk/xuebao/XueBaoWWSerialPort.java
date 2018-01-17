@@ -111,14 +111,14 @@ public class XueBaoWWSerialPort extends WWSerialPort
     {
         final byte[] data = WWUtils.listToArray(listData);
 
-        Log.i(XueBaoWWSerialPort.class.getSimpleName(), "onReadWWData:" + WWUtils.byte2HexString(data, data.length));
+        Log.i(XueBaoWWSerialPort.class.getSimpleName(), "SerialPort onReadWWData:" + WWUtils.byte2HexString(data, data.length));
 
         if (XueBaoWWSerialPortDataBuilder.checkData(data))
         {
             dispatchData(data);
         } else
         {
-            WWLogger.get().log(Level.SEVERE, "onReadWWData error:" + WWUtils.byte2HexString(data, data.length));
+            WWLogger.get().log(Level.SEVERE, "SerialPort onReadWWData error:" + WWUtils.byte2HexString(data, data.length));
         }
     }
 
@@ -145,7 +145,7 @@ public class XueBaoWWSerialPort extends WWSerialPort
                     catchResultData.result = WWCatchResult.FAIL;
                 }
 
-                WWLogger.get().log(Level.WARNING, "receive data (catch result): " + catchResultData.result);
+                WWLogger.get().log(Level.WARNING, "SerialPort receive data (catch result): " + catchResultData.result);
                 getCallback().onDataCatchResult(catchResultData);
                 break;
             case DATA_CHECK_RESULT:
@@ -198,7 +198,7 @@ public class XueBaoWWSerialPort extends WWSerialPort
                         break;
                 }
 
-                WWLogger.get().log(Level.INFO, "receive data (check result): " + checkResultData.state + " " + checkResultData.stateDesc);
+                WWLogger.get().log(Level.INFO, "SerialPort receive data (check result): " + checkResultData.state + " " + checkResultData.stateDesc);
                 getCallback().onDataCheckResult(checkResultData);
                 break;
             case DATA_HEART_BEAT:
@@ -207,7 +207,7 @@ public class XueBaoWWSerialPort extends WWSerialPort
 
                 heartBeatData.mac = WWUtils.getMacAddress();
 
-                WWLogger.get().log(Level.INFO, "receive data (heart beat): " + heartBeatData.mac);
+                WWLogger.get().log(Level.INFO, "SerialPort receive data (heart beat): " + heartBeatData.mac);
                 getCallback().onDataHeartBeat(heartBeatData);
                 break;
             default:
