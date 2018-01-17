@@ -60,7 +60,7 @@ public class WWSDKModeManager
         if (mMode != mode)
         {
             mMode = mode;
-            WWLogger.get().log(Level.INFO, "sdk mode change to " + mode);
+            WWLogger.get().log(Level.WARNING, "sdk mode change to " + mode);
         }
     }
 
@@ -74,7 +74,7 @@ public class WWSDKModeManager
             @Override
             public void run()
             {
-                WWLogger.get().log(Level.INFO, "current mode:" + getMode() + " start check sdk mode----------");
+                WWLogger.get().log(Level.INFO, "current sdk mode " + getMode() + " start check ----------");
                 onMonitor();
             }
         });
