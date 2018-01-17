@@ -64,7 +64,7 @@ public class WWSDKManager
             if (!TextUtils.isEmpty(className))
             {
                 final String prefix = "create default control sdk (" + className + ") ";
-                WWLogger.get().log(Level.INFO, prefix + "start");
+                WWLogger.get().log(Level.INFO, "try " + prefix);
                 try
                 {
                     Class clazz = Class.forName(className);
