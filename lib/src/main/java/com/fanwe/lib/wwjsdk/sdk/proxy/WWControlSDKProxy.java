@@ -26,7 +26,7 @@ public abstract class WWControlSDKProxy implements IWWControlSDKProxy
     {
     }
 
-    public static IWWControlSDKProxy getInstance()
+    public static final IWWControlSDKProxy getInstance()
     {
         if (sInstance == null)
         {
@@ -41,7 +41,7 @@ public abstract class WWControlSDKProxy implements IWWControlSDKProxy
         return sInstance;
     }
 
-    private static WWControlSDKProxy newInstance()
+    private final static WWControlSDKProxy newInstance()
     {
         final Context context = WWSDKManager.getInstance().getContext();
         final String className = context.getResources().getString(R.string.class_ww_control_sdk_proxy);
