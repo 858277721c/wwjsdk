@@ -4,9 +4,10 @@ import android.util.Log;
 
 import com.fanwe.lib.wwjsdk.log.WWLogger;
 import com.fanwe.lib.wwjsdk.sdk.IWWControlSDK;
-import com.fanwe.lib.wwjsdk.sdk.WWSDKManager;
+import com.fanwe.lib.wwjsdk.sdk.WWControlSDK;
 import com.fanwe.lib.wwjsdk.sdk.callback.WWControlSDKCallback;
 import com.fanwe.lib.wwjsdk.sdk.request.WWControlParam;
+import com.fanwe.lib.wwjsdk.sdk.request.WWInitParam;
 import com.fanwe.lib.wwjsdk.sdk.response.WWCatchResultData;
 import com.fanwe.lib.wwjsdk.sdk.response.WWCheckResultData;
 import com.fanwe.lib.wwjsdk.sdk.response.WWHeartBeatData;
@@ -46,7 +47,7 @@ public class WWSocket implements WWControlSDKCallback
 
     private IWWControlSDK getControlSDK()
     {
-        return WWSDKManager.getInstance().getControlSDK();
+        return WWControlSDK.getInstance();
     }
 
     public void setUrl(String url)
@@ -101,7 +102,9 @@ public class WWSocket implements WWControlSDKCallback
                 @Override
                 protected void onReceive(String json, Object... args)
                 {
-                    getControlSDK().init(json);
+                    WWInitParam initParam = WWJsonUtil.jsonToObject(json, WWInitParam.class);
+
+                    getControlSDK().init(initParam);
                     sendData(getEvent(), SocketResponseModel.newOk(null));
                 }
             });
