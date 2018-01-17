@@ -52,6 +52,10 @@ public class WWSDKManager
     {
         if (mContext == null)
         {
+            if (context == null)
+            {
+                throw new NullPointerException("context is null");
+            }
             mContext = context.getApplicationContext();
 
             DefaultFileHandler fileHandler = getFileHandler();
