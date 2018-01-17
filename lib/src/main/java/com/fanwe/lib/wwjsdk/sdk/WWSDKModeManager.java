@@ -86,12 +86,10 @@ class WWSDKModeManager
             @Override
             public void onSuccess()
             {
+                WWLogger.get().log(Level.INFO, "request init result:" + getResult());
                 if (getActModel().getStatus() == 1)
                 {
                     dealRequestResult(getActModel());
-                } else
-                {
-                    WWLogger.get().log(Level.SEVERE, "request init fail:" + WWJsonUtil.objectToJson(getActModel()));
                 }
             }
 
