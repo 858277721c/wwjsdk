@@ -87,6 +87,12 @@ class WWSDKModeManager
             public void onSuccess()
             {
                 WWLogger.get().log(Level.INFO, "request init result:" + getResult());
+                if (getActModel() == null)
+                {
+                    WWLogger.get().log(Level.SEVERE, "request init error: actModel is null");
+                    return;
+                }
+
                 if (getActModel().getStatus() == 1)
                 {
                     dealRequestResult(getActModel());
