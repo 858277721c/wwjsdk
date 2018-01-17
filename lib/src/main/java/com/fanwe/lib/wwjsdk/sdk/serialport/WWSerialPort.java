@@ -128,7 +128,7 @@ public abstract class WWSerialPort
      */
     public boolean sendData(byte[] data, String desc)
     {
-        final String suffix = desc + " " + WWUtils.byte2HexString(data, data.length);
+        final String suffix = "(" + desc + ") " + WWUtils.byte2HexString(data, data.length);
         if (!getSerialPort().isOpened())
         {
             WWLogger.get().log(Level.WARNING, "SerialPort send data error: SerialPort is not opened " + suffix);
