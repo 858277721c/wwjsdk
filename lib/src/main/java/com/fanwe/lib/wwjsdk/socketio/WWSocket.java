@@ -237,28 +237,19 @@ public class WWSocket
         @Override
         public void onDataCatchResult(WWCatchResultData data)
         {
-            if (sendData(EVENT_RESPONSE_CATCH, data))
-            {
-                WWLogger.get().log(Level.INFO, "Socket send catch result");
-            }
+            sendData(EVENT_RESPONSE_CATCH, data);
         }
 
         @Override
         public void onDataCheckResult(WWCheckResultData data)
         {
-            if (sendData(EVENT_RESPONSE_CHECK, data))
-            {
-                WWLogger.get().log(Level.INFO, "Socket send check result");
-            }
+            sendData(EVENT_RESPONSE_CHECK, data);
         }
 
         @Override
         public void onDataHeartBeat(WWHeartBeatData data)
         {
-            if (sendData(EVENT_RESPONSE_HEART_BEAT, data))
-            {
-                WWLogger.get().log(Level.INFO, "Socket send heart beat");
-            }
+            sendData(EVENT_RESPONSE_HEART_BEAT, data);
         }
     };
 
