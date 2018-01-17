@@ -11,6 +11,7 @@ import com.fanwe.lib.wwjsdk.model.InitActModel;
 import com.fanwe.lib.wwjsdk.model.WWServerConfig;
 import com.fanwe.lib.wwjsdk.socketio.WWSocket;
 import com.fanwe.lib.wwjsdk.utils.WWJsonUtil;
+import com.fanwe.lib.wwjsdk.utils.WWUtils;
 
 import java.util.logging.Level;
 
@@ -78,6 +79,7 @@ public class WWSDKModeManager
             return;
         }
         GetRequest request = new GetRequest(config.initUrl);
+        request.param("mac", WWUtils.getMacAddress());
         request.execute(new ModelRequestCallback<InitActModel>()
         {
             @Override
