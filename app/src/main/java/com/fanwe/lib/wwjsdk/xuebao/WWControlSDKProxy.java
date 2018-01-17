@@ -68,54 +68,54 @@ public final class WWControlSDKProxy implements IWWControlSDKProxy
     }
 
     @Override
-    public boolean begin()
+    public void begin()
     {
-        return getControlSDK().begin(null);
+        getControlSDK().begin(null);
     }
 
     //---------- move start ----------
 
     @Override
-    public boolean moveFront()
+    public void moveFront()
     {
-        return getControlSDK().moveBack(getJsonMove());
+        getControlSDK().moveBack(getJsonMove());
     }
 
     @Override
-    public boolean moveBack()
+    public void moveBack()
     {
-        return getControlSDK().moveFront(getJsonMove());
+        getControlSDK().moveFront(getJsonMove());
     }
 
     @Override
-    public boolean moveLeft()
+    public void moveLeft()
     {
-        return getControlSDK().moveLeft(getJsonMove());
+        getControlSDK().moveLeft(getJsonMove());
     }
 
     @Override
-    public boolean moveRight()
+    public void moveRight()
     {
-        return getControlSDK().moveRight(getJsonMove());
+        getControlSDK().moveRight(getJsonMove());
     }
 
     //---------- move end ----------
 
     @Override
-    public boolean stopMove()
+    public void stopMove()
     {
-        return getControlSDK().stopMove(null);
+        getControlSDK().stopMove(null);
     }
 
     @Override
-    public boolean doCatch()
+    public void doCatch()
     {
-        return getControlSDK().doCatch(null);
+        getControlSDK().doCatch(null);
     }
 
     @Override
-    public boolean check()
+    public void check()
     {
-        return getControlSDK().check(null);
+        getControlSDK().check(null);
     }
 }
