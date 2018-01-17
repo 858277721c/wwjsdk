@@ -55,6 +55,14 @@ public class WWSDKModeManager
         return mMode;
     }
 
+    private void setMode(int mode)
+    {
+        if (mMode != mode)
+        {
+            mMode = mode;
+        }
+    }
+
     /**
      * 开始监听
      */
@@ -65,7 +73,7 @@ public class WWSDKModeManager
             @Override
             public void run()
             {
-                WWLogger.get().log(Level.INFO, "current mode:" + mMode + " start check sdk mode----------");
+                WWLogger.get().log(Level.INFO, "current mode:" + getMode() + " start check sdk mode----------");
                 onMonitor();
             }
         });
@@ -115,9 +123,9 @@ public class WWSDKModeManager
 
     private void dealRequestResult(InitActModel model)
     {
-        mMode = model.getType();
+        setMode(model.getType());
 
-        if (mMode == Mode.FANWE)
+        if (getMode() == Mode.FANWE)
         {
             String url = model.getSocket_address();
             if (!TextUtils.isEmpty(url))
