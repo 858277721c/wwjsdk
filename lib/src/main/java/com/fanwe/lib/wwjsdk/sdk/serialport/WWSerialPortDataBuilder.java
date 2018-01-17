@@ -17,7 +17,14 @@ public abstract class WWSerialPortDataBuilder implements IWWSerialPortDataBuilde
     public void init(WWInitParam param)
     {
         mInitParam = param;
-        WWLogger.get().log(Level.INFO, "game init:" + param == null ? "" : WWJsonUtil.objectToJson(param));
+
+        if (param == null)
+        {
+            WWLogger.get().log(Level.INFO, "game init:");
+        } else
+        {
+            WWLogger.get().log(Level.INFO, "game init:" + WWJsonUtil.objectToJson(param));
+        }
     }
 
     /**
