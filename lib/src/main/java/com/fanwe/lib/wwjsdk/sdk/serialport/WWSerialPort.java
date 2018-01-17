@@ -138,7 +138,7 @@ public abstract class WWSerialPort
         {
             getSerialPort().getOutputStream().write(data);
             getSerialPort().getOutputStream().flush();
-            WWLogger.get().log(Level.INFO, "SerialPort send data " + suffix);
+            WWLogger.get().log(Level.INFO, "SerialPort <----- " + suffix);
             return true;
         } catch (IOException e)
         {
