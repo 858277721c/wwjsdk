@@ -24,7 +24,7 @@ import io.socket.emitter.Emitter;
 /**
  * Created by Administrator on 2017/12/19.
  */
-public class WWSocket implements WWControlSDKCallback
+public class WWSocket
 {
     public static final String EVENT_INIT = "ww_init";
     public static final String EVENT_BEGIN = "ww_begin";
@@ -176,6 +176,7 @@ public class WWSocket implements WWControlSDKCallback
             //---------- WWControlParam end ----------
 
             WWLogger.get().log(Level.INFO, "Socket try connect:" + url);
+            getControlSDK().addCallback(mControlSDKCallback);
             mSocket.connect();
         } catch (URISyntaxException e)
         {
@@ -189,6 +190,7 @@ public class WWSocket implements WWControlSDKCallback
         {
             mSocket.disconnect();
             mSocket = null;
+            getControlSDK().removeCallback(mControlSDKCallback);
             WWLogger.get().log(Level.INFO, "Socket try disconnect");
         }
     }
@@ -225,24 +227,26 @@ public class WWSocket implements WWControlSDKCallback
         }
     }
 
-    @Override
-    public void onDataCatchResult(WWCatchResultData data)
+    private WWControlSDKCallback mControlSDKCallback = new WWControlSDKCallback()
     {
-        sendData(EVENT_RESPONSE_CATCH, data);
-    }
+        @Override
+        public void onDataCatchResult(WWCatchResultData data)
+        {
+            sendData(EVENT_RESPONSE_CATCH, data);
+        }
 
-    @Override
-    public void onDataCheckResult(WWCheckResultData data)
-    {
-        sendData(EVENT_RESPONSE_CHECK, data);
-    }
+        @Override
+        public void onDataCheckResult(WWCheckResultData data)
+        {
+            sendData(EVENT_RESPONSE_CHECK, data);
+        }
 
-    @Override
-    public void onDataHeartBeat(WWHeartBeatData data)
-    {
-        sendData(EVENT_RESPONSE_HEART_BEAT, data);
-    }
-
+        @Override
+        public void onDataHeartBeat(WWHeartBeatData data)
+        {
+            sendData(EVENT_RESPONSE_HEART_BEAT, data);
+        }
+    };
 
     private abstract class WWControlParamListener extends SocketJsonListener
     {
