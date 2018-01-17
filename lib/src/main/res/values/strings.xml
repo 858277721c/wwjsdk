@@ -3,4 +3,7 @@
     <!-- 娃娃机控制sdk的类名称 -->
     <string name="class_ww_control_sdk"></string>
 
+    <!-- 娃娃机控制sdk对外接口的类名称 -->
+    <string name="class_ww_control_sdk_proxy"></string>
+
 </resources>

@@ -43,6 +43,12 @@ public class WWSDKManager
         return sInstance;
     }
 
+    public Context getContext()
+    {
+        checkInit();
+        return mContext;
+    }
+
     /**
      * 初始化娃娃sdk
      *
