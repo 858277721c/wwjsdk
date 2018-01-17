@@ -40,44 +40,4 @@ public abstract class WWSerialPortDataBuilder implements IWWSerialPortDataBuilde
         }
         return mInitParam;
     }
-
-    @Override
-    public final byte[] buildBegin(String jsonString)
-    {
-        return onBuildBegin(jsonString);
-    }
-
-    @Override
-    public final byte[] buildMove(String jsonString, Direction direction)
-    {
-        return onBuildMove(jsonString, direction);
-    }
-
-    @Override
-    public final byte[] buildStopMove(String jsonString)
-    {
-        return onBuildStopMove(jsonString);
-    }
-
-    @Override
-    public final byte[] buildCatch(String jsonString)
-    {
-        return onBuildCatch(jsonString);
-    }
-
-    @Override
-    public final byte[] buildCheck(String jsonString)
-    {
-        return onBuildCheck(jsonString);
-    }
-
-    protected abstract byte[] onBuildBegin(String jsonString);
-
-    protected abstract byte[] onBuildMove(String jsonString, Direction direction);
-
-    protected abstract byte[] onBuildStopMove(String jsonString);
-
-    protected abstract byte[] onBuildCatch(String jsonString);
-
-    protected abstract byte[] onBuildCheck(String jsonString);
 }
