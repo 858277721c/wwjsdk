@@ -98,4 +98,81 @@ public interface IWWControlSDK
      * 销毁sdk
      */
     void onDestroy();
+
+    IWWControlSDK EMPTY = new IWWControlSDK()
+    {
+        @Override
+        public void addCallback(WWControlSDKCallback callback)
+        {
+        }
+
+        @Override
+        public void removeCallback(WWControlSDKCallback callback)
+        {
+        }
+
+        @Override
+        public void init(WWInitParam param)
+        {
+        }
+
+        @Override
+        public boolean begin(String jsonString)
+        {
+            return false;
+        }
+
+        @Override
+        public boolean moveFront(String jsonString)
+        {
+            return false;
+        }
+
+        @Override
+        public boolean moveBack(String jsonString)
+        {
+            return false;
+        }
+
+        @Override
+        public boolean moveLeft(String jsonString)
+        {
+            return false;
+        }
+
+        @Override
+        public boolean moveRight(String jsonString)
+        {
+            return false;
+        }
+
+        @Override
+        public boolean stopMove(String jsonString)
+        {
+            return false;
+        }
+
+        @Override
+        public boolean doCatch(String jsonString)
+        {
+            return false;
+        }
+
+        @Override
+        public boolean check(String jsonString)
+        {
+            return false;
+        }
+
+        @Override
+        public boolean sendData(byte[] data, String desc)
+        {
+            return false;
+        }
+
+        @Override
+        public void onDestroy()
+        {
+        }
+    };
 }
