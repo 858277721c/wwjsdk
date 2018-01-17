@@ -18,7 +18,7 @@ import java.util.logging.Level;
  */
 public abstract class WWControlSDKProxy implements IWWControlSDKProxy
 {
-    public WWControlSDKProxy()
+    protected WWControlSDKProxy()
     {
 
     }
