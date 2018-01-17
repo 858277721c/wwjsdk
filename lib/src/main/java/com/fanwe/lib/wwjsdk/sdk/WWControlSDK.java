@@ -57,8 +57,8 @@ public abstract class WWControlSDK implements IWWControlSDK
         final String className = context.getResources().getString(R.string.class_ww_control_sdk);
         if (!TextUtils.isEmpty(className))
         {
-            final String prefix = "create control sdk (" + className + ") ";
-            WWLogger.get().log(Level.INFO, "try " + prefix);
+            final String prefix = "create sdk (" + className + ") ";
+            WWLogger.get().log(Level.INFO, prefix + " start");
             try
             {
                 Class clazz = Class.forName(className);
@@ -153,13 +153,19 @@ public abstract class WWControlSDK implements IWWControlSDK
         {
             return;
         }
-        mListCallback.add(callback);
+        if (mListCallback.add(callback))
+        {
+            WWLogger.get().log(Level.INFO, "add sdk callback:" + callback + " size:" + mListCallback.size());
+        }
     }
 
     @Override
     public synchronized void removeCallback(WWControlSDKCallback callback)
     {
-        mListCallback.remove(callback);
+        if (mListCallback.remove(callback))
+        {
+            WWLogger.get().log(Level.INFO, "remove sdk callback:" + callback + " size:" + mListCallback.size());
+        }
     }
 
     @Override
