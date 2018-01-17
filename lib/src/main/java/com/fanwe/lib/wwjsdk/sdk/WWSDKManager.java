@@ -60,33 +60,38 @@ public class WWSDKManager
                 fileHandler.addToLogger();
             }
 
-            final String className = mContext.getResources().getString(R.string.class_ww_control_sdk);
-            if (!TextUtils.isEmpty(className))
-            {
-                final String prefix = "create control sdk (" + className + ") ";
-                WWLogger.get().log(Level.INFO, "try " + prefix);
-                try
-                {
-                    Class clazz = Class.forName(className);
-                    Object object = clazz.newInstance();
-                    if (object instanceof WWControlSDK)
-                    {
-                        WWLogger.get().log(Level.INFO, prefix + "success");
-                    } else
-                    {
-                        throw new RuntimeException("\"class_ww_control_sdk\" value in your string.xml must be instance of com.fanwe.lib.wwjsdk.sdk.WWControlSDK");
-                    }
-                } catch (Exception e)
-                {
-                    throw new RuntimeException(e);
-                }
-            } else
-            {
-                throw new RuntimeException("\"class_ww_control_sdk\" is not specify in your string.xml for example:" + "\r\n" +
-                        "<string name=\"class_ww_control_sdk\">com.fanwe.lib.wwjsdk.xuebao.XueBaoWWControlSDK</string>");
-            }
+            initControlSDK();
 
             WWLogger.get().log(Level.INFO, "WWSDKManager init finish");
+        }
+    }
+
+    private void initControlSDK()
+    {
+        final String className = mContext.getResources().getString(R.string.class_ww_control_sdk);
+        if (!TextUtils.isEmpty(className))
+        {
+            final String prefix = "create control sdk (" + className + ") ";
+            WWLogger.get().log(Level.INFO, "try " + prefix);
+            try
+            {
+                Class clazz = Class.forName(className);
+                Object object = clazz.newInstance();
+                if (object instanceof WWControlSDK)
+                {
+                    WWLogger.get().log(Level.INFO, prefix + "success");
+                } else
+                {
+                    throw new RuntimeException("\"class_ww_control_sdk\" value in your string.xml must be instance of com.fanwe.lib.wwjsdk.sdk.WWControlSDK");
+                }
+            } catch (Exception e)
+            {
+                throw new RuntimeException(e);
+            }
+        } else
+        {
+            throw new RuntimeException("\"class_ww_control_sdk\" is not specify in your string.xml for example:" + "\r\n" +
+                    "<string name=\"class_ww_control_sdk\">com.fanwe.lib.wwjsdk.xuebao.XueBaoWWControlSDK</string>");
         }
     }
 
