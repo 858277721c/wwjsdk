@@ -46,7 +46,6 @@ public abstract class WWSerialPort
                     WWLogger.get().log(Level.SEVERE, "SerialPort read error:" + e, e);
                 }
             };
-            mSerialPort.setConfig(new FISerialPort.Config());
         }
         return mSerialPort;
     }
@@ -56,7 +55,7 @@ public abstract class WWSerialPort
         mCallback = callback;
     }
 
-    public final WWControlSDKCallback getCallback()
+    protected final WWControlSDKCallback getCallback()
     {
         if (mCallback == null)
         {
@@ -89,8 +88,11 @@ public abstract class WWSerialPort
      */
     public final void init(String path, int baudRate)
     {
-        getSerialPort().getConfig().path = path;
-        getSerialPort().getConfig().baudrate = baudRate;
+        FISerialPort.Config config = new FISerialPort.Config();
+        config.path = path;
+        config.baudrate = baudRate;
+
+        getSerialPort().setConfig(config);
     }
 
     /**
@@ -161,9 +163,9 @@ public abstract class WWSerialPort
     protected abstract void onReadData(byte[] data, int readSize);
 
     /**
-     * 销毁
+     * 关闭串口
      */
-    public void onDestroy()
+    public void close()
     {
         if (mSerialPort != null)
         {
