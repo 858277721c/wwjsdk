@@ -86,6 +86,7 @@ public class WWSocket
                 public void call(Object... args)
                 {
                     WWLogger.get().log(Level.INFO, "Socket connected");
+                    WWControlSDK.getInstance().addCallback(mControlSDKCallback);
                 }
             });
             mSocket.on(Socket.EVENT_DISCONNECT, new Emitter.Listener()
@@ -177,7 +178,6 @@ public class WWSocket
             //---------- WWControlParam end ----------
 
             WWLogger.get().log(Level.INFO, "Socket try connect:" + url);
-            WWControlSDK.getInstance().addCallback(mControlSDKCallback);
             mSocket.connect();
         } catch (URISyntaxException e)
         {
