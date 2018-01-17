@@ -74,6 +74,10 @@ public class WWSDKManager
                 {
                     WWLogger.get().log(Level.SEVERE, prefix + "error:" + e, e);
                 }
+            } else
+            {
+                throw new RuntimeException("\"class_default_ww_control_sdk\" is not specify in your string.xml for example:" + "\r\n" +
+                        "<string name=\"class_default_ww_control_sdk\">com.fanwe.lib.wwjsdk.xuebao.XueBaoWWControlSDK</string>");
             }
 
             WWLogger.get().log(Level.INFO, "WWSDKManager init finish");
