@@ -1,6 +1,6 @@
 <resources>
 
-    <!-- 默认的娃娃机控制sdk的类名称 -->
-    <string name="class_default_ww_control_sdk"></string>
+    <!-- 娃娃机控制sdk的类名称 -->
+    <string name="class_ww_control_sdk"></string>
 
 </resources>

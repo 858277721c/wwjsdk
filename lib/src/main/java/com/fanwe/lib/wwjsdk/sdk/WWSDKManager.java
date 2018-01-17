@@ -60,10 +60,10 @@ public class WWSDKManager
                 fileHandler.addToLogger();
             }
 
-            final String className = mContext.getResources().getString(R.string.class_default_ww_control_sdk);
+            final String className = mContext.getResources().getString(R.string.class_ww_control_sdk);
             if (!TextUtils.isEmpty(className))
             {
-                final String prefix = "create default control sdk (" + className + ") ";
+                final String prefix = "create control sdk (" + className + ") ";
                 WWLogger.get().log(Level.INFO, "try " + prefix);
                 try
                 {
@@ -76,8 +76,8 @@ public class WWSDKManager
                 }
             } else
             {
-                throw new RuntimeException("\"class_default_ww_control_sdk\" is not specify in your string.xml for example:" + "\r\n" +
-                        "<string name=\"class_default_ww_control_sdk\">com.fanwe.lib.wwjsdk.xuebao.XueBaoWWControlSDK</string>");
+                throw new RuntimeException("\"class_ww_control_sdk\" is not specify in your string.xml for example:" + "\r\n" +
+                        "<string name=\"class_ww_control_sdk\">com.fanwe.lib.wwjsdk.xuebao.XueBaoWWControlSDK</string>");
             }
 
             WWLogger.get().log(Level.INFO, "WWSDKManager init finish");

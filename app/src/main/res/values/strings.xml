@@ -1,5 +1,5 @@
 <resources>
     <string name="app_name">wwjsdk</string>
 
-    <string name="class_default_ww_control_sdk">com.fanwe.lib.wwjsdk.xuebao.XueBaoWWControlSDK</string>
+    <string name="class_ww_control_sdk">com.fanwe.lib.wwjsdk.xuebao.XueBaoWWControlSDK</string>
 </resources>
