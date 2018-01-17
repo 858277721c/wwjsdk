@@ -60,6 +60,7 @@ public class WWSDKModeManager
         if (mMode != mode)
         {
             mMode = mode;
+            WWLogger.get().log(Level.INFO, "sdk mode change to " + mode);
         }
     }
 
