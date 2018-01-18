@@ -14,7 +14,7 @@ public class WWInitParam
      */
     public int keepCatch = 0;
     /**
-     * 单次移动的时长(单位毫秒)，默认300毫秒
+     * 单次移动爪子的时长(单位毫秒)，默认300毫秒
      */
     public int moveDuration = 300;
 
