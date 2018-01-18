@@ -60,6 +60,37 @@ public class WWUtils
         return sb.toString();
     }
 
+    /**
+     * 按比例把原值转换为目标值
+     *
+     * @param source             要转换的值，必须大于0
+     * @param sourceMax          原值最大值，必须大于0
+     * @param targetMax          目标值最大值，必须大于0
+     * @param valueForScaledZero 如果缩放后的值为0，则返回当前参数
+     * @return
+     */
+    public static int scaleValue(int source, int sourceMax, int targetMax, int valueForScaledZero)
+    {
+        if (source <= 0 || sourceMax <= 0 || targetMax <= 0)
+        {
+            return 0;
+        }
+
+        float percent = source / ((float) sourceMax);
+        if (percent > 1f)
+        {
+            percent = 1f;
+        }
+
+        final float value = percent * targetMax;
+        int result = Math.round(value);
+        if (result <= 0)
+        {
+            result = valueForScaledZero;
+        }
+        return result;
+    }
+
     public static String getMacAddress()
     {
         try
