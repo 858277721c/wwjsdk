@@ -49,12 +49,6 @@ public class XueBaoWWSerialPortDataBuilder extends WWSerialPortDataBuilder
     @Override
     public byte[] buildMove(String jsonString, Direction direction)
     {
-        XueBaoWWMoveParam param = WWJsonUtil.jsonToObject(jsonString, XueBaoWWMoveParam.class);
-        if (param == null)
-        {
-            param = new XueBaoWWMoveParam();
-        }
-
         List<Integer> list = buildStart(0);
 
         // 命令
@@ -79,7 +73,7 @@ public class XueBaoWWSerialPortDataBuilder extends WWSerialPortDataBuilder
                 break;
         }
 
-        final long duration = param.moveDuration;
+        final long duration = getInitParam().moveDuration;
         final int dur1 = (int) (duration % 256);
         final int dur2 = (int) (duration / 256);
 

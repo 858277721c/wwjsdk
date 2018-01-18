@@ -92,6 +92,7 @@ public abstract class WWControlSDKProxy implements IWWControlSDKProxy
     public final void init(int keepCatch)
     {
         WWInitParam param = new WWInitParam();
+        param.moveDuration = 5 * 1000;
         if (keepCatch == 1)
         {
             param.keepCatch = 1;
