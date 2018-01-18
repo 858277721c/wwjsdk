@@ -35,6 +35,7 @@ public abstract class WWControlSDK implements IWWControlSDK
     protected WWControlSDK()
     {
         WWSDKManager.getInstance().checkInit();
+        WWLogger.get().log(Level.INFO, getClass().getSimpleName() + " instance created");
         getSerialPort().open();
     }
 
