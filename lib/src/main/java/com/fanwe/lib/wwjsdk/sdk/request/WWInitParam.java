@@ -30,4 +30,28 @@ public class WWInitParam
      * 移动爪力[0-100]，默认值0表示由娃娃机内部控制
      */
     public int clawForceMove = 0;
+
+    /**
+     * 按比例把爪力值转换为目标爪力值
+     *
+     * @param clawForce 要转换的爪力值
+     * @param max       目标爪力值的最大值
+     * @return
+     */
+    public int convertClawForce(int clawForce, int max)
+    {
+        if (max <= 0 || clawForce <= 0)
+        {
+            return 0;
+        }
+        final float percent = clawForce / 100f;
+        final float value = percent * max;
+        int result = Math.round(value);
+
+        if (result <= 0)
+        {
+            result = 1;
+        }
+        return result;
+    }
 }

@@ -24,9 +24,9 @@ public class XueBaoWWSerialPortDataBuilder extends WWSerialPortDataBuilder
 
         int timeout = getInitParam().timeout;
         int keepCatch = getInitParam().keepCatch;
-        int clawForceStart = 0;
-        int clawForceTop = 0;
-        int clawForceMove = 0;
+        int clawForceStart = getInitParam().convertClawForce(getInitParam().clawForceStart, 48);
+        int clawForceTop = getInitParam().convertClawForce(getInitParam().clawForceTop, 48);
+        int clawForceMove = getInitParam().convertClawForce(getInitParam().clawForceMove, 48);
         int clawForceBig = 0;
         int grabHeight = 0;
         int clawDownTime = 0;
