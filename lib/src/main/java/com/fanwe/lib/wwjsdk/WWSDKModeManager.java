@@ -97,13 +97,16 @@ public class WWSDKModeManager
                 WWLogger.get().log(Level.INFO, "request init result:" + getResult());
                 if (getActModel() == null)
                 {
-                    WWLogger.get().log(Level.SEVERE, "request init error: actModel is null");
+                    WWLogger.get().log(Level.WARNING, "request init error: actModel is null");
                     return;
                 }
 
                 if (getActModel().getStatus() == 1)
                 {
                     dealRequestResult(getActModel());
+                } else
+                {
+                    WWLogger.get().log(Level.WARNING, "request init fail: error status");
                 }
             }
 
@@ -124,7 +127,9 @@ public class WWSDKModeManager
 
     private void dealRequestResult(InitActModel model)
     {
-        setMode(model.getType());
+        final int requestMode = model.getType();
+        WWLogger.get().log(Level.INFO, "request init success current mode " + getMode() + " request mode " + requestMode);
+        setMode(requestMode);
 
         if (getMode() == Mode.FANWE)
         {
