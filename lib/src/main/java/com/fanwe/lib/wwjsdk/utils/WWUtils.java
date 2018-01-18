@@ -63,7 +63,7 @@ public class WWUtils
     /**
      * 按比例把原值转换为目标值
      *
-     * @param source             要转换的值，必须大于0
+     * @param source             要转换的原值，必须大于0
      * @param sourceMax          原值最大值，必须大于0
      * @param targetMax          目标值最大值，必须大于0
      * @param valueForScaledZero 如果缩放后的值为0，则返回当前参数
