@@ -27,21 +27,59 @@ import io.socket.emitter.Emitter;
  */
 public class WWSocket
 {
-    public static final String EVENT_INIT = "ww_init";
-    public static final String EVENT_BEGIN = "ww_begin";
+    /**
+     * 透传
+     */
+    private static final String EVENT_SEND_DATA = "ww_send_data";
+    /**
+     * 初始化
+     */
+    private static final String EVENT_INIT = "ww_init";
+    /**
+     * 开始游戏
+     */
+    private static final String EVENT_BEGIN = "ww_begin";
+    /**
+     * 向前移动爪子
+     */
+    private static final String EVENT_FRONT = "ww_front";
+    /**
+     * 向后移动爪子
+     */
+    private static final String EVENT_BACK = "ww_back";
+    /**
+     * 向左移动爪子
+     */
+    private static final String EVENT_LEFT = "ww_left";
+    /**
+     * 向右移动爪子
+     */
+    private static final String EVENT_RIGHT = "ww_right";
+    /**
+     * 停止移动爪子
+     */
+    private static final String EVENT_STOP_MOVE = "ww_stop_move";
+    /**
+     * 下爪
+     */
+    private static final String EVENT_CATCH = "ww_catch";
+    /**
+     * 检测娃娃机状态
+     */
+    private static final String EVENT_CHECK = "ww_check";
 
-    public static final String EVENT_FRONT = "ww_front";
-    public static final String EVENT_BACK = "ww_back";
-    public static final String EVENT_LEFT = "ww_left";
-    public static final String EVENT_RIGHT = "ww_right";
-    public static final String EVENT_STOP_MOVE = "ww_stop_move";
-
-    public static final String EVENT_CATCH = "ww_catch";
-    public static final String EVENT_CHECK = "ww_check";
-
-    public static final String EVENT_RESPONSE_CHECK = "ww_response_check";
-    public static final String EVENT_RESPONSE_CATCH = "ww_response_catch";
-    public static final String EVENT_RESPONSE_HEART_BEAT = "ww_response_heart_beat";
+    /**
+     * 娃娃机返回检测结果
+     */
+    private static final String EVENT_RESPONSE_CHECK = "ww_response_check";
+    /**
+     * 娃娃机返回抓取结果
+     */
+    private static final String EVENT_RESPONSE_CATCH = "ww_response_catch";
+    /**
+     * 娃娃机返回心跳
+     */
+    private static final String EVENT_RESPONSE_HEART_BEAT = "ww_response_heart_beat";
 
     private Socket mSocket;
     private String mUrl;
@@ -99,6 +137,23 @@ public class WWSocket
             });
 
             //---------- WWControlParam start ----------
+            mSocket.on(EVENT_SEND_DATA, new SocketJsonListener(EVENT_SEND_DATA)
+            {
+                @Override
+                protected void onReceive(String json, Object... args)
+                {
+                    WWControlParam param = WWJsonUtil.jsonToObject(json, WWControlParam.class);
+                    if (param != null && param.hasDataOriginal())
+                    {
+                        // 透传
+                        boolean result = getControlSDK().sendData(param.dataOriginal, getEvent());
+                        sendControlResultData(getEvent(), result);
+                    } else
+                    {
+                        sendData(getEvent(), SocketResponseModel.newErrorParam("dataOriginal not found"));
+                    }
+                }
+            });
             mSocket.on(EVENT_INIT, new SocketJsonListener(EVENT_INIT)
             {
                 @Override
@@ -203,7 +258,7 @@ public class WWSocket
             sendData(event, SocketResponseModel.newOk(null));
         } else
         {
-            sendData(event, SocketResponseModel.newInternalError(null));
+            sendData(event, SocketResponseModel.newErrorInternal(null));
         }
     }
 
