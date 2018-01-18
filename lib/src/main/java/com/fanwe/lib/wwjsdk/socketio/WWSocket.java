@@ -165,66 +165,66 @@ public class WWSocket
                     sendData(getEvent(), SocketResponseModel.newOk(null));
                 }
             });
-            mSocket.on(EVENT_BEGIN, new WWControlParamListener(EVENT_BEGIN)
+            mSocket.on(EVENT_BEGIN, new SocketJsonListener(EVENT_BEGIN)
             {
                 @Override
-                protected void onReceive(WWControlParam param, String json, Object... args)
+                protected void onReceive(String json, Object... args)
                 {
                     sendControlResultData(getEvent(), getControlSDK().begin(json));
                 }
             });
-            mSocket.on(EVENT_FRONT, new WWControlParamListener(EVENT_FRONT)
+            mSocket.on(EVENT_FRONT, new SocketJsonListener(EVENT_FRONT)
             {
                 @Override
-                protected void onReceive(WWControlParam param, String json, Object[] args)
+                protected void onReceive(String json, Object[] args)
                 {
                     sendControlResultData(getEvent(), getControlSDK().moveFront(json));
                 }
             });
-            mSocket.on(EVENT_BACK, new WWControlParamListener(EVENT_BACK)
+            mSocket.on(EVENT_BACK, new SocketJsonListener(EVENT_BACK)
             {
                 @Override
-                protected void onReceive(WWControlParam param, String json, Object[] args)
+                protected void onReceive(String json, Object[] args)
                 {
                     sendControlResultData(getEvent(), getControlSDK().moveBack(json));
                 }
             });
-            mSocket.on(EVENT_LEFT, new WWControlParamListener(EVENT_LEFT)
+            mSocket.on(EVENT_LEFT, new SocketJsonListener(EVENT_LEFT)
             {
                 @Override
-                protected void onReceive(WWControlParam param, String json, Object[] args)
+                protected void onReceive(String json, Object[] args)
                 {
                     sendControlResultData(getEvent(), getControlSDK().moveLeft(json));
                 }
             });
-            mSocket.on(EVENT_RIGHT, new WWControlParamListener(EVENT_RIGHT)
+            mSocket.on(EVENT_RIGHT, new SocketJsonListener(EVENT_RIGHT)
             {
                 @Override
-                protected void onReceive(WWControlParam param, String json, Object[] args)
+                protected void onReceive(String json, Object[] args)
                 {
                     sendControlResultData(getEvent(), getControlSDK().moveRight(json));
                 }
             });
-            mSocket.on(EVENT_STOP_MOVE, new WWControlParamListener(EVENT_STOP_MOVE)
+            mSocket.on(EVENT_STOP_MOVE, new SocketJsonListener(EVENT_STOP_MOVE)
             {
                 @Override
-                protected void onReceive(WWControlParam param, String json, Object[] args)
+                protected void onReceive(String json, Object[] args)
                 {
                     sendControlResultData(getEvent(), getControlSDK().stopMove(json));
                 }
             });
-            mSocket.on(EVENT_CATCH, new WWControlParamListener(EVENT_CATCH)
+            mSocket.on(EVENT_CATCH, new SocketJsonListener(EVENT_CATCH)
             {
                 @Override
-                protected void onReceive(WWControlParam param, String json, Object[] args)
+                protected void onReceive(String json, Object[] args)
                 {
                     sendControlResultData(getEvent(), getControlSDK().doCatch(json));
                 }
             });
-            mSocket.on(EVENT_CHECK, new WWControlParamListener(EVENT_CHECK)
+            mSocket.on(EVENT_CHECK, new SocketJsonListener(EVENT_CHECK)
             {
                 @Override
-                protected void onReceive(WWControlParam param, String json, Object[] args)
+                protected void onReceive(String json, Object[] args)
                 {
                     sendControlResultData(getEvent(), getControlSDK().check(json));
                 }
@@ -307,29 +307,4 @@ public class WWSocket
             sendData(EVENT_RESPONSE_HEART_BEAT, data);
         }
     };
-
-    private abstract class WWControlParamListener extends SocketJsonListener
-    {
-        public WWControlParamListener(String event)
-        {
-            super(event);
-        }
-
-        @Override
-        protected final void onReceive(String json, Object... args)
-        {
-            WWControlParam param = WWJsonUtil.jsonToObject(json, WWControlParam.class);
-            if (param != null && param.hasDataOriginal())
-            {
-                // 如果有原始数据，则只做透传
-                boolean result = getControlSDK().sendData(param.dataOriginal, getEvent());
-                sendControlResultData(getEvent(), result);
-            } else
-            {
-                onReceive(param, json, args);
-            }
-        }
-
-        protected abstract void onReceive(WWControlParam param, String json, Object... args);
-    }
 }
