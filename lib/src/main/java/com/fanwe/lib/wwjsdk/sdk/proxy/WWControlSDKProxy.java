@@ -18,12 +18,13 @@ import java.util.logging.Level;
 /**
  * Created by Administrator on 2018/1/17.
  */
-public abstract class WWControlSDKProxy implements IWWControlSDKProxy
+public class WWControlSDKProxy implements IWWControlSDKProxy
 {
     private static IWWControlSDKProxy sInstance;
 
     protected WWControlSDKProxy()
     {
+        WWLogger.get().log(Level.INFO, getClass().getSimpleName() + " instance created");
     }
 
     public static final IWWControlSDKProxy getInstance()
@@ -66,8 +67,7 @@ public abstract class WWControlSDKProxy implements IWWControlSDKProxy
             }
         } else
         {
-            throw new RuntimeException("\"class_ww_control_sdk_proxy\" is not specify in your string.xml for example:" + "\r\n" +
-                    "<string name=\"class_ww_control_sdk_proxy\">com.fanwe.lib.wwjsdk.xuebao.XueBaoWWControlSDKProxy</string>");
+            return new WWControlSDKProxy();
         }
     }
 
