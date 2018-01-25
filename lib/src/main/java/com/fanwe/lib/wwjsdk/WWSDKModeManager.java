@@ -136,12 +136,7 @@ public class WWSDKModeManager
             String url = model.getSocket_address();
             if (!TextUtils.isEmpty(url))
             {
-                if (!url.equals(mSocket.getUrl()))
-                {
-                    mSocket.disconnect();
-                    mSocket.setUrl(url);
-                }
-                mSocket.connect();
+                mSocket.connect(url);
             } else
             {
                 WWLogger.get().log(Level.SEVERE, "init param error:empty socket_address");

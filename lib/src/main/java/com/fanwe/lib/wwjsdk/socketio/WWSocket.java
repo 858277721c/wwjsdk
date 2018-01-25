@@ -1,5 +1,6 @@
 package com.fanwe.lib.wwjsdk.socketio;
 
+import android.text.TextUtils;
 import android.util.Log;
 
 import com.fanwe.lib.wwjsdk.WWSDKModeManager;
@@ -89,14 +90,23 @@ public class WWSocket
         return WWControlSDK.getInstanceByMode(WWSDKModeManager.Mode.FANWE);
     }
 
-    public void setUrl(String url)
+    /**
+     * 连接socket服务器
+     *
+     * @param url
+     */
+    public void connect(String url)
     {
-        mUrl = url;
-    }
-
-    public String getUrl()
-    {
-        return mUrl;
+        if (TextUtils.isEmpty(url))
+        {
+            return;
+        }
+        if (!url.equals(mUrl))
+        {
+            disconnect();
+            mUrl = url;
+        }
+        connect();
     }
 
     public boolean isConnected()
@@ -104,15 +114,15 @@ public class WWSocket
         return mSocket != null && mSocket.connected();
     }
 
-    public void connect()
+    private void connect()
     {
         if (isConnected())
         {
             return;
         }
+        disconnect();
 
         final String url = mUrl;
-
         IO.Options options = new IO.Options();
         options.reconnectionDelay = 100;
         try
@@ -232,7 +242,7 @@ public class WWSocket
 
             //---------- WWControlParam end ----------
 
-            WWLogger.get().log(Level.INFO, "Socket try connect:" + url);
+            WWLogger.get().log(Level.INFO, "Socket try connect:" + url + " " + mSocket);
             mSocket.connect();
         } catch (URISyntaxException e)
         {
@@ -244,7 +254,7 @@ public class WWSocket
     {
         if (mSocket != null)
         {
-            WWLogger.get().log(Level.INFO, "Socket try disconnect");
+            WWLogger.get().log(Level.INFO, "Socket try disconnect:" + mSocket);
             WWControlSDK.getInstance().removeCallback(mControlSDKCallback);
             mSocket.disconnect();
             mSocket = null;
