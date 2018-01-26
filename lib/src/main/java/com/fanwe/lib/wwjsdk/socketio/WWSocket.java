@@ -16,7 +16,6 @@ import com.fanwe.lib.wwjsdk.sdk.response.WWHeartBeatData;
 import com.fanwe.lib.wwjsdk.socketio.listener.SocketJsonListener;
 import com.fanwe.lib.wwjsdk.utils.WWJsonUtil;
 
-import java.net.URISyntaxException;
 import java.util.logging.Level;
 
 import io.socket.client.IO;
@@ -244,7 +243,7 @@ public class WWSocket
 
             WWLogger.get().log(Level.INFO, "Socket try connect:" + url + " " + mSocket);
             mSocket.connect();
-        } catch (URISyntaxException e)
+        } catch (Exception e)
         {
             WWLogger.get().log(Level.SEVERE, "Socket connect error: " + e, e);
         }
