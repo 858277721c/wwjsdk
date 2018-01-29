@@ -87,7 +87,13 @@ public class WWSDKModeManager
         {
             return;
         }
-        GetRequest request = new GetRequest(config.initUrl);
+        final String url = config.initUrl;
+        if (TextUtils.isEmpty(url))
+        {
+            return;
+        }
+
+        GetRequest request = new GetRequest(url);
         request.param("mac", WWUtils.getMacAddress());
         request.execute(new ModelRequestCallback<InitActModel>()
         {
