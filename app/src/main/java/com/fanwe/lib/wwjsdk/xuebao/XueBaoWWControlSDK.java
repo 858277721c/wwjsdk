@@ -1,5 +1,6 @@
 package com.fanwe.lib.wwjsdk.xuebao;
 
+import com.fanwe.lib.wwjsdk.model.WWServerConfig;
 import com.fanwe.lib.wwjsdk.sdk.WWControlSDK;
 import com.fanwe.lib.wwjsdk.sdk.serialport.WWSerialPort;
 import com.fanwe.lib.wwjsdk.sdk.serialport.WWSerialPortDataBuilder;
@@ -19,7 +20,12 @@ public class XueBaoWWControlSDK extends WWControlSDK
     protected WWSerialPort provideSerialPort()
     {
         WWSerialPort serialPort = new XueBaoWWSerialPort();
-        serialPort.init("/dev/ttyS1", 115200);
+
+        WWServerConfig config = WWServerConfig.get();
+        String portPath = config.portPath;
+        int portBaudRate = config.portBaudRate;
+
+        serialPort.init(portPath, portBaudRate);
         return serialPort;
     }
 }
