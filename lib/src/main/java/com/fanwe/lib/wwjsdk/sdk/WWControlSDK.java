@@ -7,6 +7,7 @@ import com.fanwe.lib.wwjsdk.R;
 import com.fanwe.lib.wwjsdk.WWSDKManager;
 import com.fanwe.lib.wwjsdk.WWSDKModeManager;
 import com.fanwe.lib.wwjsdk.log.WWLogger;
+import com.fanwe.lib.wwjsdk.model.WWServerConfig;
 import com.fanwe.lib.wwjsdk.sdk.callback.WWControlSDKCallback;
 import com.fanwe.lib.wwjsdk.sdk.request.WWInitParam;
 import com.fanwe.lib.wwjsdk.sdk.response.WWCatchResultData;
@@ -110,7 +111,11 @@ public abstract class WWControlSDK implements IWWControlSDK
     {
         if (mSerialPort == null)
         {
-            mSerialPort = provideSerialPort();
+            final WWServerConfig config = WWServerConfig.get();
+            final String portPath = config.portPath;
+            final int portBaudRate = config.portBaudRate;
+            
+            mSerialPort = provideSerialPort(portPath, portBaudRate);
             if (mSerialPort == null)
             {
                 throw new NullPointerException("you must provide a WWSerialPort before this");
@@ -282,7 +287,9 @@ public abstract class WWControlSDK implements IWWControlSDK
     /**
      * 提供一个娃娃串口通信对象
      *
+     * @param path     串口路径
+     * @param baudRate 波特率
      * @return
      */
-    protected abstract WWSerialPort provideSerialPort();
+    protected abstract WWSerialPort provideSerialPort(String path, int baudRate);
 }
