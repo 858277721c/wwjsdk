@@ -94,7 +94,7 @@ public class WWSDKModeManager
         }
 
         GetRequest request = new GetRequest(url);
-        request.param("mac", WWUtils.getMacAddress());
+        request.param("mac", WWUtils.getMacAddress(0));
         request.execute(new ModelRequestCallback<InitActModel>()
         {
             @Override
