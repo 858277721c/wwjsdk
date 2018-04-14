@@ -2,8 +2,8 @@ package com.fanwe.lib.wwjsdk;
 
 import android.text.TextUtils;
 
-import com.fanwe.lib.http.GetRequest;
 import com.fanwe.lib.http.callback.ModelRequestCallback;
+import com.fanwe.lib.http.impl.httprequest.GetRequest;
 import com.fanwe.lib.looper.FLooper;
 import com.fanwe.lib.looper.impl.FSimpleLooper;
 import com.fanwe.lib.wwjsdk.log.WWLogger;
@@ -94,8 +94,9 @@ public class WWSDKModeManager
             return;
         }
 
-        GetRequest request = new GetRequest(url);
-        request.param("mac", WWUtils.getMacAddress(0));
+        GetRequest request = new GetRequest();
+        request.setUrl(url);
+        request.getParams().put("mac", WWUtils.getMacAddress(0));
         request.execute(new ModelRequestCallback<InitActModel>()
         {
             @Override
