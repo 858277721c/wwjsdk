@@ -69,7 +69,8 @@ public class WWSDKModeManager
      */
     public void startMonitor()
     {
-        mLooper.start(30 * 1000, new Runnable()
+        mLooper.setInterval(30 * 1000);
+        mLooper.start(new Runnable()
         {
             @Override
             public void run()
