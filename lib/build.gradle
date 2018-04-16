@@ -8,8 +8,8 @@ android {
     defaultConfig {
         minSdkVersion 15
         targetSdkVersion 22
-        versionCode 20180414
-        versionName "1.0.11"
+        versionCode 20180416
+        versionName "1.0.12"
     }
     buildTypes {
         release {
@@ -21,11 +21,11 @@ android {
 
 dependencies {
 
+    api 'com.github.zj565061763:serialport:1.0.5'
+
     api 'com.github.zj565061763:log:1.0.7'
     api 'com.github.zj565061763:looper:1.0.14'
     api 'com.github.zj565061763:http-http-request:1.0.3'
-
-    api 'com.github.zj565061763:serialport:1.0.4'
 
     api 'com.google.code.gson:gson:2.8.2'
     api('io.socket:socket.io-client:1.0.0') {
